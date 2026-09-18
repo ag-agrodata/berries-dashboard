@@ -13,7 +13,7 @@ PUBLIC_DIR = ROOT / "data" / "public"
 AG6_PATH = ROOT / "src" / "berrix" / "assets" / "ag6.svg"
 
 st.set_page_config(
-	page_title="Tablero Comercial · Berries (público)",
+	page_title="Tablero Comercial · Berrix (público)",
 	layout="wide",
 	page_icon=str(AG6_PATH) if AG6_PATH.exists() else "🫐"
 )

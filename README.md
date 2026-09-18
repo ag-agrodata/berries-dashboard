@@ -1,11 +1,13 @@
+[🇬🇧 English](README.md) · [🇪🇸 Español](README.es.md)
+
 <div align="center">
   <img src="src/berrix/assets/ag6.svg" alt="AG · Andrés Gómez" width="140">
 
-  # Tablero Comercial · Berries
+  # Commercial Dashboard · Berrix
 
-  **Analítica de ventas B2B para el sector agroindustrial de berries**
+  **B2B sales analytics for the berry agro-industry**
 
-  Un caso real de análisis comercial, anonimizado y reproducible.
+  A real commercial analytics case — anonymized and reproducible.
 
   [![Python](https://img.shields.io/badge/Python-3.13-1B4332?style=flat-square&logo=python&logoColor=white)](https://www.python.org/)
   [![Streamlit](https://img.shields.io/badge/Streamlit-1.61-1B4332?style=flat-square&logo=streamlit&logoColor=white)](https://streamlit.io/)
@@ -16,74 +18,105 @@
 
 ---
 
-## El problema
+## The problem
 
-Los equipos comerciales de las empresas agroindustriales suelen navegar entre hojas de cálculo desconectadas, análisis manuales y decisiones basadas en promedios que esconden la realidad. Cuando la información está fragmentada, el comité comercial no ve tendencias, no detecta riesgos a tiempo y no prioriza acciones con datos.
+Commercial teams at agro-industrial companies often navigate disconnected spreadsheets, manual analyses, and decisions based on averages that hide the real picture. When information is fragmented, the commercial committee misses trends, fails to spot risks in time, and cannot prioritize actions with data.
 
-La pregunta que este proyecto responde: **¿cómo transformar datos transaccionales de ventas B2B en un instrumento de decisión diario para un equipo comercial?**
+The question this project answers: **how do you turn B2B sales transactional data into a daily decision-making instrument for a commercial team?**
 
-## Qué hace este tablero
+## What this dashboard does
 
-El tablero estructura la información comercial en cuatro vistas interconectadas, más una pestaña de gobernanza que documenta el proceso de anonimización:
+The dashboard structures commercial information across four interconnected views, plus a governance tab that documents the anonymization process:
 
-| Pestaña | Pregunta que responde |
+| Tab | Question it answers |
 |---|---|
-| 📊 **01 · Ventas por canal** | ¿Cómo van las ventas y qué canal impulsa el crecimiento? |
-| 🗺️ **02 · Dinámica regional** | ¿De dónde viene la venta y cómo se distribuye geográficamente? |
-| 🚨 **03 · Alertas y riesgos** | ¿Qué clientes están reduciendo su compra de forma sostenida? |
-| 📦 **04 · Portafolio** | ¿Qué clientes solo compran una especie y cuáles son las cuentas estratégicas? |
-| 🛡️ **00 · Gobernanza** | ¿Cómo se anonimizaron los datos y qué técnicas se aplicaron? |
+| 📊 **01 · Sales by channel** | How are sales going and which channel is driving growth? |
+| 🗺️ **02 · Regional dynamics** | Where does revenue come from and how is it distributed geographically? |
+| 🚨 **03 · Alerts & risks** | Which customers are steadily reducing their purchases? |
+| 📦 **04 · Portfolio** | Which customers buy only one species, and which are the strategic accounts? |
+| 🛡️ **00 · Governance** | How was the data anonymized and which techniques were applied? |
 
-### Decisiones de diseño
+### Design decisions
 
-- **Métricas precio-neutrales en kilogramos** para las alertas (D03): un cambio de precio nunca hace parecer que un cliente compra menos cuando compra lo mismo.
-- **Semáforo de retención con condición de sostenibilidad**: una caída de un solo mes no activa alerta; se requieren 2 meses consecutivos para confirmar tendencia.
-- **Regla de oro del universo B2B**: toda transacción que no hace match con la tabla de clientes objetivo queda fuera del análisis.
+- **Price-neutral metrics in kilograms** for retention alerts (D03): a price change should never make a customer look like they are buying less when they are buying the same volume.
+- **Retention traffic light with sustainability rule**: a single-month dip does not trigger an alert; the signal must hold for 2 consecutive months to be confirmed.
+- **Golden rule for the B2B universe**: any transaction that does not match the target customer table is excluded from the analysis.
 
-## Gobernanza de datos
+## Data governance
 
-Este proyecto trabaja con **datos derivados k-anónimos**, generados a partir de un caso real bajo un acuerdo de confidencialidad. La información original nunca se publica.
+This project works with **k-anonymous derived data**, generated from a real case under a confidentiality agreement. The original information is never published.
 
-Técnicas de anonimización aplicadas (conforme al certificado de métodos):
+Anonymization techniques applied (per the Methods Certificate):
 
-- Agregación / totalización
-- k-anonimato (k ≥ 5)
-- Supresión de celdas con < 10 contribuyentes
-- Generalización de categorías
-- Redondeo y perturbación aleatoria
+- Aggregation / roll-up
+- k-anonymity (k ≥ 5)
+- Cell suppression for cells with < 10 contributors
+- Category generalization
+- Rounding and random perturbation
 
-La metodología completa está documentada en [`build_public.py`](src/berrix/build_public.py).
+The full methodology is documented in [`build_public.py`](src/berrix/build_public.py).
 
-> ⚠️ **Nota de transparencia:** debido al tamaño de la base B2B, algunas categorías con pocos contribuyentes se generalizan o suprimen para garantizar k ≥ 5 y celdas ≥ 10. El análisis detallado por cliente individual existe únicamente en el nivel local pseudonimizado, conforme al acuerdo de confidencialidad.
+> ⚠️ **Transparency note:** due to the size of the B2B base, some categories with few contributors are generalized or suppressed to guarantee k ≥ 5 and cells ≥ 10. The detailed per-customer analysis exists only at the local pseudonymized level, under the confidentiality agreement.
 
-## Stack tecnológico
+## Tech stack
 
-| Herramienta | Rol |
+| Tool | Role |
 |---|---|
-| **Python 3.13** | Lenguaje base |
-| **DuckDB** | Motor SQL para transformaciones |
-| **Polars** | Manipulación de DataFrames |
-| **Streamlit** | Framework del dashboard |
-| **Plotly** | Visualizaciones interactivas |
-| **uv** | Gestor de dependencias |
+| **Python 3.13** | Base language |
+| **DuckDB** | SQL engine for transformations |
+| **Polars** | DataFrame manipulation |
+| **Streamlit** | Dashboard framework |
+| **Plotly** | Interactive visualizations |
+| **uv** | Dependency manager |
 
-## Estructura del proyecto
+## Project structure
 
 ```text
 berries-dashboard/
 ├── src/
 │   └── berrix/
-│       ├── app_public.py       # Dashboard Streamlit público
-│       ├── build_public.py     # Metodología de anonimización
+│       ├── app_public.py       # Public Streamlit dashboard
+│       ├── build_public.py     # Anonymization methodology
 │       └── assets/
-│           └── ag6.svg         # Logo AG v6
+│           └── ag6.svg         # AG v6 logo
 ├── data/
-│   └── public/                 # Solo datos k-anónimos
+│   └── public/                 # k-anonymous data only
 │       ├── d01_*.parquet
 │       ├── d02_*.parquet
 │       ├── d03_*.parquet
 │       └── d04_*.parquet
 ├── .streamlit/
-│   └── config.toml             # Identidad de marca AG
+│   └── config.toml             # AG brand identity
 ├── requirements.txt
 └── README.md
+```
+
+## Local execution
+
+```text
+# Clone the repo
+git clone https://github.com/ag-agrodata/berries-dashboard.git
+cd berries-dashboard
+
+# Create virtual environment and install dependencies
+python -m venv .venv
+source .venv/bin/activate
+pip install -r requirements.txt
+
+# Run the dashboard
+streamlit run src/berrix/app_public.py
+```
+
+## Live demo
+
+[🌐 Streamlit Cloud](https://berries-dashboard-ztwjxjslwpatnh5kvgn9wd.streamlit.app/)
+
+## License
+
+This project is released under the MIT License. The included data are k-anonymous derivatives and contain no identifiable information about third parties.
+
+<div align="center">
+Built by Andrés Gómez · Agribusiness Data Analyst · 
+"I turn the complexity of the field into data-driven decisions."
+afgomez.agroindustrial@gmail.com
+</div>
