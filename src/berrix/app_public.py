@@ -5,15 +5,19 @@ import plotly.express as px
 import plotly.graph_objects as go
 import plotly.io as pio
 from pathlib import Path
-from datetime import date, timedelta
+
+from i18n import t, detect_lang, lang_selector, tech_dataframe, map_col, color_map
 
 # ============ RUTAS Y LOGO ============
 ROOT = Path(__file__).resolve().parents[2]
 PUBLIC_DIR = ROOT / "data" / "public"
-AG6_PATH = ROOT / "src" / "berrix" / "assets" / "ag6.svg"
+AG6_PATH = Path(__file__).resolve().parent / "assets" / "ag6.svg"
+
+# Idioma inicial según locale del navegador (antes de set_page_config)
+LANG = detect_lang()
 
 st.set_page_config(
-	page_title="Tablero Comercial · Berrix (público)",
+	page_title=t("page_title"),
 	layout="wide",
 	page_icon=str(AG6_PATH) if AG6_PATH.exists() else "🫐"
 )
@@ -201,185 +205,124 @@ pio.templates.default = "ag_berrix"
 @st.cache_data
 def load_public_data():
 	data = {}
-	
-	# D01
 	data["d01_canal"] = pl.read_parquet(PUBLIC_DIR / "d01_canal_publico.parquet")
 	data["d01_temporada"] = pl.read_parquet(PUBLIC_DIR / "d01_temporada_publico.parquet")
-	
-	# D02
 	data["d02_macro_region"] = pl.read_parquet(PUBLIC_DIR / "d02_macro_region_publico.parquet")
 	data["d02_concentracion"] = pl.read_parquet(PUBLIC_DIR / "d02_concentracion_publico.parquet")
-	
-	# D03
 	data["d03_mensual"] = pl.read_parquet(PUBLIC_DIR / "d03_alertas_publico.parquet")
 	data["d03_total"] = pl.read_parquet(PUBLIC_DIR / "d03_alertas_total_publico.parquet")
-	
-	# D04
 	data["d04_concentracion"] = pl.read_parquet(PUBLIC_DIR / "d04_portafolio_publico.parquet")
 	data["d04_global"] = pl.read_parquet(PUBLIC_DIR / "d04_portafolio_global_publico.parquet")
-	
 	return data
 
 data = load_public_data()
 
-# ============ HEADER CON LOGO AG v6 ============
+# ============ HEADER CON LOGO AG v6 + SELECTOR DE IDIOMA ============
 AG6_SVG = AG6_PATH.read_text(encoding="utf-8") if AG6_PATH.exists() else ""
 
-st.markdown(
-	f"""
-	<div class="ag-header">
-		<div class="ag-logo">{AG6_SVG}</div>
-		<div>
-			<div class="ag-title">Tablero Comercial · Berries</div>
-			<div class="ag-subtitle">
-				Datos públicos k-anónimos · Elaborado por Andrés Gómez · Analista de Datos Agroindustriales
+h_left, h_right = st.columns([7, 1], vertical_alignment="center")
+with h_left:
+	st.markdown(
+		f"""
+		<div class="ag-header">
+			<div class="ag-logo">{AG6_SVG}</div>
+			<div>
+				<div class="ag-title">{t("header_title")}</div>
+				<div class="ag-subtitle">{t("header_subtitle")}</div>
 			</div>
 		</div>
-	</div>
-	""",
-	unsafe_allow_html=True,
-)
+		""",
+		unsafe_allow_html=True,
+	)
+with h_right:
+	lang_selector()
 
 # ============ TABS ============
 tab0, tab1, tab2, tab3, tab4 = st.tabs([
-	"🛡️ 00 · Gobernanza",
-	"📊 01 · Ventas por canal",
-	"🗺️ 02 · Dinámica regional",
-	"🚨 03 · Alertas y riesgos",
-	"📦 04 · Portafolio"
+	t("tab0"),
+	t("tab1"),
+	t("tab2"),
+	t("tab3"),
+	t("tab4"),
 ])
 
 # ============ PESTAÑA 00 · GOBERNANZA ============
 with tab0:
-	st.subheader("🛡️ Gobernanza de datos")
-	st.caption(
-		"Este tablero usa **datos públicos k-anónimos**, derivados de información comercial real "
-		"mediante técnicas de anonimización conforme al acuerdo de confidencialidad."
-	)
+	st.subheader(t("gov_sub"))
+	st.caption(t("gov_caption"))
 
 	g1, g2, g3, g4 = st.columns(4)
 	with g1:
-		st.metric(label="Nivel público", value="K-anónimo")
+		st.metric(label=t("gov_m1_label"), value=t("gov_m1_value"))
 	with g2:
-		st.metric(label="Umbral k", value="k ≥ 5")
+		st.metric(label=t("gov_m2_label"), value=t("gov_m2_value"))
 	with g3:
-		st.metric(label="Supresión", value="Celdas < 10")
+		st.metric(label=t("gov_m3_label"), value=t("gov_m3_value"))
 	with g4:
-		st.metric(label="Técnicas", value="5 aplicadas")
+		st.metric(label=t("gov_m4_label"), value=t("gov_m4_value"))
 
 	st.markdown("---")
 
-	st.markdown("### Técnicas de anonimización aplicadas")
-	tecnicas_data = {
-		"Técnica": [
-			"Agregación / totalización",
-			"K-anonimato (k ≥ 5)",
-			"Supresión de celdas",
-			"Generalización de categorías",
-			"Redondeo y perturbación",
-		],
-		"Aplicación": [
-			"Sumar registros individuales en grupos",
-			"Cada grupo tiene al menos 5 contribuyentes",
-			"Celdas con <10 contribuyentes se ocultan",
-			"Reducir granularidad (ej. macro-regiones)",
-			"Añadir ruido controlado a valores",
-		],
-	}
-	st.dataframe(tecnicas_data, use_container_width=True, hide_index=True)
+	st.markdown(t("gov_tec_title"))
+	st.dataframe(tech_dataframe(), use_container_width=True, hide_index=True)
 
-	with st.expander("📜 Nota de transparencia"):
-		st.markdown(
-			"""
-			**Debido al tamaño de la base B2B (33 clientes), algunas categorías con pocos contribuyentes
-			se generalizan o suprimen para garantizar k≥5 y celdas≥10.**
-			
-			Ejemplos de generalización aplicada:
-			- **Canales:** Retail (8 clientes) se suprime en el nivel público; solo se muestran HORECA y Mayoristas.
-			- **Regiones:** Las 7 regiones originales se agrupan en "Centro" y "Resto de regiones".
-			- **Cuentas nacionales:** Se diluyen en el grupo "Resto de regiones" por k-anonimato.
-			
-			El análisis detallado por cliente individual está disponible únicamente en el nivel local
-			pseudonimizado, conforme al acuerdo de confidencialidad.
-			"""
-		)
+	with st.expander(t("gov_expander")):
+		st.markdown(t("gov_note"))
 
 # ============ PESTAÑA 01 · VENTAS POR CANAL ============
 with tab1:
-	st.subheader("📊 Ventas por canal (datos agregados)")
-	st.caption(
-		"Mezcla de canales comerciales y evolución temporal. "
-		"Datos agregados por temporada para garantizar k-anonimato."
-	)
+	st.subheader(t("d01_sub"))
+	st.caption(t("d01_caption"))
 
-	# KPIs
 	d01_total = data["d01_temporada"]["venta_neta_cop"].sum()
 	d01_canales = data["d01_canal"].sort("venta_neta_cop", descending=True)
 	canal_top = d01_canales[0, "canal"] if len(d01_canales) > 0 else "-"
-	canal_top_val = d01_canales[0, "venta_neta_cop"] if len(d01_canales) > 0 else 0
+	from i18n import disp as _disp
+	canal_top_disp = _disp(canal_top, "canal") if canal_top != "-" else "-"
 
 	c1, c2, c3 = st.columns(3)
 	with c1:
-		st.metric("Venta neta B2B total", f"$ {d01_total/1e9:,.1f} B")
+		st.metric(t("d01_m1"), f"$ {d01_total/1e9:,.1f} B")
 	with c2:
-		st.metric("Canal líder", canal_top)
+		st.metric(t("d01_m2"), canal_top_disp)
 	with c3:
-		st.metric("Canales visibles", f"{len(d01_canales)} de 5")
+		st.metric(t("d01_m3"), t("d01_m3_value", n=len(d01_canales)))
 
 	st.markdown("---")
 
-	# Gráfico 1: Mezcla de canales
-	st.subheader("Mezcla de canales (agregado histórico)")
-	canal_colors = {
-		"Food Service - HORECA": "#1B4332",
-		"Mayoristas": "#2C5F7C",
-	}
+	st.subheader(t("d01_mix_title"))
+	pdf_canal = map_col(d01_canales.to_pandas(), "canal", "canal")
 	fig_canal = px.bar(
-		d01_canales.to_pandas(),
+		pdf_canal,
 		x="canal",
 		y="venta_neta_cop",
 		color="canal",
-		color_discrete_map=canal_colors,
-		labels={"venta_neta_cop": "Venta neta (COP)", "canal": "Canal"}
+		color_discrete_map=color_map("canal"),
+		labels={"venta_neta_cop": t("d01_axis_venta"), "canal": t("d01_axis_canal")}
 	)
-	fig_canal.update_layout(
-		height=400,
-		yaxis=dict(tickformat="$,.0f"),
-		showlegend=False
-	)
+	fig_canal.update_layout(height=400, yaxis=dict(tickformat="$,.0f"), showlegend=False)
 	st.plotly_chart(fig_canal, use_container_width=True)
 
-	st.info(
-		"💡 **Nota:** Retail se suprime en el nivel público (8 clientes < umbral de 10). "
-		"Solo se muestran los canales con ≥10 contribuyentes."
-	)
+	st.info(t("d01_info"))
 
 	st.markdown("---")
 
-	# Gráfico 2: Evolución por temporada
-	st.subheader("Evolución por temporada")
+	st.subheader(t("d01_temp_title"))
 	fig_temp = px.line(
 		data["d01_temporada"].to_pandas(),
 		x="temporada",
 		y="venta_neta_cop",
 		markers=True,
-		labels={"venta_neta_cop": "Venta neta (COP)", "temporada": "Temporada"}
+		labels={"venta_neta_cop": t("d01_axis_venta"), "temporada": t("d01_axis_temp")}
 	)
-	fig_temp.update_layout(
-		height=400,
-		yaxis=dict(tickformat="$,.0f")
-	)
+	fig_temp.update_layout(height=400, yaxis=dict(tickformat="$,.0f"))
 	st.plotly_chart(fig_temp, use_container_width=True)
 
 # ============ PESTAÑA 02 · DINÁMICA REGIONAL ============
 with tab2:
-	st.subheader("🗺️ Dinámica regional (datos agregados)")
-	st.caption(
-		"Distribución geográfica generalizada en macro-regiones. "
-		"Las cuentas nacionales se integran al grupo 'Resto de regiones' por k-anonimato."
-	)
+	st.subheader(t("d02_sub"))
+	st.caption(t("d02_caption"))
 
-	# KPIs
 	d02_total = data["d02_macro_region"]["venta_neta_cop"].sum()
 	centro_val = data["d02_macro_region"].filter(pl.col("macro_region") == "Centro")["venta_neta_cop"].sum()
 	resto_val = data["d02_macro_region"].filter(pl.col("macro_region") == "Resto de regiones")["venta_neta_cop"].sum()
@@ -387,27 +330,23 @@ with tab2:
 
 	c1, c2, c3 = st.columns(3)
 	with c1:
-		st.metric("Venta neta B2B total", f"$ {d02_total/1e9:,.1f} B")
+		st.metric(t("d02_m1"), f"$ {d02_total/1e9:,.1f} B")
 	with c2:
-		st.metric("Centro", f"$ {centro_val/1e9:,.1f} B", f"{pct_centro:.1f}%")
+		st.metric(t("d02_m2"), f"$ {centro_val/1e9:,.1f} B", f"{pct_centro:.1f}%")
 	with c3:
-		st.metric("Resto de regiones", f"$ {resto_val/1e9:,.1f} B", f"{100-pct_centro:.1f}%")
+		st.metric(t("d02_m3"), f"$ {resto_val/1e9:,.1f} B", f"{100-pct_centro:.1f}%")
 
 	st.markdown("---")
 
-	# Donut: Centro vs Resto
-	st.subheader("Distribución Centro vs Resto")
-	region_colors = {
-		"Centro": "#1B4332",
-		"Resto de regiones": "#D8B25C",
-	}
+	st.subheader(t("d02_donut_title"))
+	pdf_reg = map_col(data["d02_macro_region"].to_pandas(), "macro_region", "macro_region")
 	fig_donut = px.pie(
-		data["d02_macro_region"].to_pandas(),
+		pdf_reg,
 		names="macro_region",
 		values="venta_neta_cop",
 		hole=0.60,
 		color="macro_region",
-		color_discrete_map=region_colors
+		color_discrete_map=color_map("macro_region")
 	)
 	fig_donut.update_traces(textinfo="label+percent")
 	fig_donut.update_layout(height=400)
@@ -415,36 +354,24 @@ with tab2:
 
 	st.markdown("---")
 
-	# Línea: concentración del Centro por temporada
-	st.subheader("Concentración geográfica (participación del Centro)")
+	st.subheader(t("d02_conc_title"))
 	fig_conc = px.line(
 		data["d02_concentracion"].to_pandas(),
 		x="temporada",
 		y="indice_concentracion",
 		markers=True,
-		labels={"indice_concentracion": "% participación del Centro", "temporada": "Temporada"}
+		labels={"indice_concentracion": t("d02_conc_y"), "temporada": t("d01_axis_temp")}
 	)
-	fig_conc.update_layout(
-		height=400,
-		yaxis=dict(tickformat=".0%")
-	)
+	fig_conc.update_layout(height=400, yaxis=dict(tickformat=".0%"))
 	st.plotly_chart(fig_conc, use_container_width=True)
 
-	st.info(
-		"💡 **Nota:** La categoría 'Nacional' (3 clientes) se agrupa en 'Resto de regiones' "
-		"para garantizar k-anonimato. El análisis detallado por región fina está disponible "
-		"en el nivel local pseudonimizado."
-	)
+	st.info(t("d02_info"))
 
 # ============ PESTAÑA 03 · ALERTAS Y RIESGOS ============
 with tab3:
-	st.subheader("🚨 Alertas y riesgos (datos agregados)")
-	st.caption(
-		"Semáforo de retención basado en volumen (kg). "
-		"Datos agregados por nivel de riesgo, sin detalle por cliente individual."
-	)
+	st.subheader(t("d03_sub"))
+	st.caption(t("d03_caption"))
 
-	# KPIs desde el total
 	d03_total = data["d03_total"]
 	conteo_alto = d03_total.filter(pl.col("nivel_riesgo") == "alto_riesgo")["n_clientes"].sum()
 	conteo_medio = d03_total.filter(pl.col("nivel_riesgo") == "riesgo_medio")["n_clientes"].sum()
@@ -453,82 +380,58 @@ with tab3:
 
 	c1, c2, c3, c4 = st.columns(4)
 	with c1:
-		st.metric("🔴 Alto riesgo", f"{conteo_alto} clientes")
+		st.metric(t("d03_m1"), t("d03_clientes", n=conteo_alto))
 	with c2:
-		st.metric("🟡 Riesgo medio", f"{conteo_medio} clientes")
+		st.metric(t("d03_m2"), t("d03_clientes", n=conteo_medio))
 	with c3:
-		st.metric("🟢 Estables", f"{conteo_estable} clientes")
+		st.metric(t("d03_m3"), t("d03_clientes", n=conteo_estable))
 	with c4:
-		st.metric("📦 Kg en riesgo", f"{kg_riesgo:,.0f} kg")
+		st.metric(t("d03_m4"), t("d03_kg", kg=f"{kg_riesgo:,.0f}"))
 
 	st.markdown("---")
 
-	# Gráfico: evolución mensual del semáforo
-	st.subheader("Evolución del semáforo (últimos períodos)")
-	d03_mensual_df = data["d03_mensual"].sort("periodo").to_pandas()
-	
-	nivel_colors = {
-		"alto_riesgo": "#BC6C25",
-		"riesgo_medio": "#E9C46A",
-		"estable": "#1B4332"
-	}
+	st.subheader(t("d03_evo_title"))
+	pdf_sem = map_col(data["d03_mensual"].sort("periodo").to_pandas(), "nivel_riesgo", "nivel_riesgo")
 	fig_semaforo = px.bar(
-		d03_mensual_df,
+		pdf_sem,
 		x="periodo",
 		y="n_clientes",
 		color="nivel_riesgo",
-		color_discrete_map=nivel_colors,
+		color_discrete_map=color_map("nivel_riesgo"),
 		barmode="stack",
-		labels={"n_clientes": "Número de clientes", "periodo": "Período", "nivel_riesgo": "Nivel de riesgo"}
+		labels={
+			"n_clientes": t("d03_axis_n"),
+			"periodo": t("d03_axis_periodo"),
+			"nivel_riesgo": t("d03_axis_nivel"),
+		}
 	)
 	fig_semaforo.update_layout(
 		height=500,
-		legend=dict(
-			orientation="h",
-			yanchor="bottom",
-			y=1.02,
-			xanchor="right",
-			x=1
-		)
+		legend=dict(orientation="h", yanchor="bottom", y=1.02, xanchor="right", x=1)
 	)
 	st.plotly_chart(fig_semaforo, use_container_width=True)
 
 	st.markdown("---")
 
-	# Tabla de totales
-	st.subheader("Totales por nivel de riesgo")
-	st.dataframe(
-		d03_total.to_pandas().style.format({
-			"kg_caida_total": "{:,.0f}"
-		}),
-		use_container_width=True
-	)
+	st.subheader(t("d03_table_title"))
+	pdf_tab = d03_total.to_pandas()
+	pdf_tab = map_col(pdf_tab, "nivel_riesgo", "nivel_riesgo")
+	pdf_tab["kg_caida_total"] = pdf_tab["kg_caida_total"].round(0)
+	pdf_tab = pdf_tab.rename(columns={
+		"nivel_riesgo": t("d03_col_nivel"),
+		"n_clientes": t("d03_col_clientes"),
+		"kg_caida_total": t("d03_col_kg"),
+	})
+	st.dataframe(pdf_tab, use_container_width=True, hide_index=True)
 
-	with st.expander("Supuestos y gobernanza"):
-		st.markdown(
-			"""
-			- **Métrica:** Kilogramos (precio-neutral para evitar falsos positivos por volatilidad).
-			- **Línea base:** Promedio móvil de los 3 meses calendario anteriores por cliente.
-			- **Sostenibilidad:** El color solo se confirma si la caída se repite 2 meses consecutivos.
-			- **Niveles:**
-			  - 🟢 Estable: caída <15% o no sostenida
-			  - 🟡 Riesgo medio: caída ≥15% y <30%, sostenida 2 meses
-			  - 🔴 Alto riesgo: caída ≥30%, sostenida 2 meses
-			
-			**Nota:** El semáforo por cliente individual no se publica por k-anonimato.
-			Solo se muestran agregados por nivel de riesgo.
-			"""
-		)
+	with st.expander(t("d03_expander")):
+		st.markdown(t("d03_note"))
 
 # ============ PESTAÑA 04 · PORTAFOLIO ============
 with tab4:
-	st.subheader("📦 Portafolio (datos agregados)")
-	st.caption(
-		"Análisis estratégico de la base B2B: concentración y Pareto. "
-		"Datos agregados por tipo de cliente, sin detalle individual."
-	)
+	st.subheader(t("d04_sub"))
+	st.caption(t("d04_caption"))
 
-	# KPIs desde el global
 	d04_global = data["d04_global"].row(0, named=True)
 	total_clientes = d04_global["total_clientes"]
 	clientes_cautivos = d04_global["clientes_cautivos"]
@@ -539,54 +442,47 @@ with tab4:
 
 	c1, c2, c3, c4 = st.columns(4)
 	with c1:
-		st.metric("Total clientes", f"{total_clientes}")
+		st.metric(t("d04_m1"), f"{total_clientes}")
 	with c2:
-		st.metric("Cautivos", f"{clientes_cautivos} ({clientes_cautivos*100//total_clientes}%)")
+		st.metric(t("d04_m2"), t("d04_pct", n=clientes_cautivos, p=clientes_cautivos*100//total_clientes))
 	with c3:
-		st.metric("Alto valor", f"{clientes_alto_valor} ({clientes_alto_valor*100//total_clientes}%)")
+		st.metric(t("d04_m3"), t("d04_pct", n=clientes_alto_valor, p=clientes_alto_valor*100//total_clientes))
 	with c4:
-		st.metric("Pareto", pct_pareto)
+		st.metric(t("d04_m4"), pct_pareto)
 
 	st.markdown("---")
 
-	# Donut: Cautivo vs Diversificado
-	st.subheader("Distribución por concentración")
-	conc_colors = {
-		"Cautivo": "#1B4332",
-		"Diversificado": "#D8B25C"
-	}
-	fig_conc = px.pie(
-		data["d04_concentracion"].to_pandas(),
+	st.subheader(t("d04_donut_title"))
+	pdf_conc = map_col(data["d04_concentracion"].to_pandas(), "concentracion", "concentracion")
+	fig_conc4 = px.pie(
+		pdf_conc,
 		names="concentracion",
 		values="n_clientes",
 		hole=0.60,
 		color="concentracion",
-		color_discrete_map=conc_colors
+		color_discrete_map=color_map("concentracion")
 	)
-	fig_conc.update_traces(textinfo="label+percent+value")
-	fig_conc.update_layout(height=400)
-	st.plotly_chart(fig_conc, use_container_width=True)
+	fig_conc4.update_traces(textinfo="label+percent+value")
+	fig_conc4.update_layout(height=400)
+	st.plotly_chart(fig_conc4, use_container_width=True)
 
 	st.markdown("---")
 
-	# Métricas globales
-	st.subheader("Métricas globales")
+	st.subheader(t("d04_global_title"))
 	g1, g2 = st.columns(2)
 	with g1:
-		st.metric("Venta total B2B", f"$ {venta_total/1e9:,.1f} B")
-		st.metric("Venta en cautivos", f"$ {venta_cautivos/1e9:,.1f} B", f"{venta_cautivos*100/venta_total:.1f}% del total")
-	with g2:
-		st.metric("Clientes para 80% de venta", f"{d04_global['clientes_para_80']} de {total_clientes}")
-		st.metric("Concentración Pareto", pct_pareto)
-
-	with st.expander("Supuestos y gobernanza"):
-		st.markdown(
-			"""
-			- **Umbral de cautividad:** ≥80% del volumen en la especie dominante.
-			- **Pareto:** Clientes que acumulan el 80% de la venta neta B2B.
-			- **Actividad mínima:** Clientes con ≥2 meses de compra.
-			
-			**Nota:** La matriz de portafolio por cliente individual no se publica por k-anonimato.
-			Solo se muestran agregados por tipo de concentración y métricas globales.
-			"""
+		st.metric(t("d04_g1"), f"$ {venta_total/1e9:,.1f} B")
+		st.metric(
+			t("d04_g2"),
+			f"$ {venta_cautivos/1e9:,.1f} B",
+			t("d04_g2_delta", p=f"{venta_cautivos*100/venta_total:.1f}")
 		)
+	with g2:
+		st.metric(
+			t("d04_g3"),
+			t("d04_g3_value", a=d04_global["clientes_para_80"], b=total_clientes)
+		)
+		st.metric(t("d04_g4"), pct_pareto)
+
+	with st.expander(t("d04_expander")):
+		st.markdown(t("d04_note"))
