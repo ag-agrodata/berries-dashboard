@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Guía del Tablero Comercial · Berrix · Versión pública</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --green:#1B4332;--green2:#2c5d49;--blue:#2C5F7C;--gold:#D8B25C;--terra:#BC6C25;
+    --bone:#FAFAF8;--ink:#22261e;--muted:#63695e;--line:#e2ddd0;--soft:#f4f1e9;
+    --head:'Sora',system-ui,sans-serif;--body:'Inter',system-ui,sans-serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  body{font-family:var(--body);color:var(--ink);font-size:14px;line-height:1.65;background:var(--bone);
+    background-image:radial-gradient(rgba(27,67,50,.04) 1px,transparent 1px);background-size:26px 26px}
+  .bar{position:sticky;top:0;z-index:60;background:rgba(16,42,32,.97);color:var(--bone);backdrop-filter:blur(8px)}
+  .bar .in{max-width:1000px;margin:0 auto;padding:10px 20px;display:flex;align-items:center;gap:12px}
+  .bar svg{width:40px;height:31px;color:var(--bone);--spike:var(--gold);flex:none}
+  .bar .t{font-family:var(--head);font-weight:700;font-size:13px}
+  .bar .s{font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold)}
+  .bar .grow{flex:1}
+  .pbtn{font-family:var(--head);font-weight:600;font-size:12px;border:1px solid var(--gold);color:var(--gold);
+    background:transparent;border-radius:99px;padding:7px 14px;cursor:pointer}
+  .pbtn:hover{background:var(--gold);color:var(--green)}
+  .doc{max-width:1000px;margin:0 auto;padding:24px 20px 70px}
+  .cover{background:linear-gradient(135deg,#102a20,#16352a 55%,#16243a);color:var(--bone);
+    border-radius:18px;padding:clamp(28px,4.5vw,52px);position:relative;overflow:hidden}
+  .cover::before{content:"";position:absolute;inset:0;
+    background:radial-gradient(560px 300px at 88% -12%,rgba(216,178,92,.22),transparent 60%)}
+  .cover .in{position:relative}
+  .cover svg{width:96px;height:74px;color:var(--bone);--spike:var(--gold)}
+  .cover .k{font-family:var(--head);font-weight:700;font-size:10px;letter-spacing:.22em;
+    text-transform:uppercase;color:var(--gold);margin:18px 0 8px}
+  .cover h1{font-family:var(--head);font-weight:800;letter-spacing:-.02em;line-height:1.08;
+    font-size:clamp(24px,4vw,38px)}
+  .cover .sub{margin-top:12px;color:#dfe6df;max-width:64ch}
+  .cover .meta{margin-top:24px;display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px 24px}
+  @media(max-width:640px){.cover .meta{grid-template-columns:1fr}}
+  .cover .meta .m .l{font-family:var(--head);font-weight:700;font-size:9px;
+    letter-spacing:.16em;text-transform:uppercase;color:var(--gold)}
+  .cover .meta .m .v{font-size:12.5px;color:#e9e7df;margin-top:3px}
+  .toc{background:#fff;border:1px solid var(--line);border-radius:14px;padding:18px 22px;margin-top:20px}
+  .toc h2{font-family:var(--head);font-weight:700;font-size:14px;color:var(--green);margin-bottom:8px}
+  .toc ol{margin-left:18px}
+  .toc li{font-size:13px;margin:4px 0}
+  .toc li b{font-family:var(--head);color:var(--green)}
+  section{margin-top:32px}
+  .sh{display:flex;align-items:baseline;gap:12px;margin-bottom:6px}
+  .sh .n{font-family:var(--head);font-weight:800;font-size:12px;color:#fff;background:var(--green);
+    min-width:36px;height:32px;border-radius:9px;display:grid;place-items:center;flex:none;padding:0 8px}
+  .sh .n.gold{background:var(--gold);color:var(--green)}
+  .sh .n.terra{background:var(--terra)}
+  .sh .n.blue{background:var(--blue)}
+  h2{font-family:var(--head);font-weight:800;font-size:clamp(19px,2.8vw,25px);color:var(--green)}
+  .intro{color:var(--muted);max-width:76ch;margin:6px 0 12px}
+  .blk{background:#fff;border:1px solid var(--line);border-radius:14px;padding:18px 20px;
+    margin-top:14px;border-top:4px solid var(--green)}
+  .blk.gold{border-top-color:var(--gold)}.blk.terra{border-top-color:var(--terra)}
+  .blk.blue{border-top-color:var(--blue)}
+  .blk h3{font-family:var(--head);font-weight:800;font-size:15.5px;color:var(--green);margin-bottom:8px}
+  .blk h4{font-family:var(--head);font-weight:800;font-size:13px;color:var(--terra);margin:12px 0 6px}
+  .blk p{font-size:13.5px;margin:6px 0}
+  .blk ul,.blk ol{margin:8px 0 8px 20px;font-size:13.5px}
+  .blk li{margin:5px 0}
+  table{width:100%;border-collapse:collapse;font-size:12.5px;margin:10px 0}
+  th{background:var(--soft);font-family:var(--head);font-weight:700;font-size:10.5px;
+    letter-spacing:.05em;text-transform:uppercase;color:var(--green);text-align:left;
+    padding:8px 10px;border-bottom:2px solid var(--line)}
+  td{padding:8px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+  tbody tr:hover{background:var(--soft)}
+  code{background:var(--soft);border:1px solid var(--line);border-radius:5px;padding:1px 6px;font-size:12px}
+  .call{border-radius:0 12px 12px 0;padding:12px 16px;margin:12px 0;font-size:13px}
+  .call.g{background:rgba(27,67,50,.08);border-left:5px solid var(--green)}
+  .call.r{background:rgba(188,108,37,.08);border-left:5px solid var(--terra)}
+  .call.b{background:rgba(44,95,124,.08);border-left:5px solid var(--blue)}
+  .call b{font-family:var(--head);color:var(--green)}
+  .dot{display:inline-block;width:11px;height:11px;border-radius:50%;margin-right:7px;vertical-align:-1px}
+  .dot.r{background:var(--terra)}.dot.y{background:var(--gold)}.dot.g{background:var(--green)}
+  .phase{display:flex;align-items:flex-start;gap:12px;margin:10px 0;padding:10px 12px;
+    background:var(--soft);border-radius:10px;font-size:13px}
+  .phase .num{font-family:var(--head);font-weight:800;color:var(--green);font-size:15px;
+    min-width:24px;flex:none}
+  .phase b{color:var(--green)}
+  .el{background:var(--soft);border:1px solid var(--line);border-radius:12px;padding:12px 14px;margin-top:10px}
+  .el h5{font-family:var(--head);font-weight:800;font-size:13px;color:var(--green);margin-bottom:4px}
+  .el h5 code{color:var(--terra);font-size:11.5px}
+  .el p{font-size:12.5px;margin:3px 0}
+  footer{max-width:1000px;margin:0 auto;padding:0 20px 50px;display:flex;align-items:center;
+    gap:14px;flex-wrap:wrap;font-size:12px;color:var(--muted)}
+  footer svg{width:34px;height:26px;color:var(--green);--spike:var(--gold)}
+  footer b{color:var(--green)}
+  @page{size:Letter;margin:16mm 15mm 18mm}
+  @media print{
+    body{background:#fff}
+    .bar{display:none}
+    .doc{padding:0;max-width:none}
+    .cover{break-after:page;border-radius:0}
+    .blk,.el,.phase{break-inside:avoid}
+    tr{break-inside:avoid}
+  }
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="ag6" viewBox="0 0 279.39998 215.89999">
+    <g transform="matrix(1.4999946,0,0,1.4999946,-352.31664,10.324524)">
+      <path fill="currentColor" d="m 308.01221,35.083647 v 20.000329 h -19.99982 v 19.999813 h -20.00033 v 20.00033 h 20.00033 19.99982 20.00033 a 10,10 0 0 1 -3.82664,-0.761194 10,10 0 0 0 3.82715,0.760677 10,10 0 0 0 9.99991,-9.99939 h -20.00033 a 10,10 0 0 0 2.92902,7.070886 10,10 0 0 1 -2.92954,-7.071403 10,10 0 0 1 9.95598,-9.999906 h 0.0444 V 55.083976 35.083647 Z"/>
+      <path fill="var(--spike,#D8B25C)" d="m 328.01254,35.083647 v 20.000329 19.999813 a 10,10 0 0 0 -10.00043,10.000423 h 20.00033 a 10,10 0 0 1 -9.9999,9.999907 h 19.99981 19.99981 20.00033 V 75.083789 55.083976 H 368.01216 V 75.083789 H 348.01235 V 55.083976 h 19.99981 V 35.083647 h -19.99981 z"/>
+    </g>
+  </symbol>
+</svg>
+
+<div class="bar"><div class="in">
+  <svg><use href="#ag6"/></svg>
+  <div><div class="t">Guía del Tablero Comercial · Berrix</div><div class="s">Versión pública · k-anónima</div></div>
+  <span class="grow"></span>
+  <button class="pbtn" onclick="window.print()">Imprimir / Guardar PDF</button>
+</div></div>
+
+<div class="doc">
+
+  <div class="cover"><div class="in">
+    <svg><use href="#ag6"/></svg>
+    <div class="k">Guía pública · Berrix · berries-dashboard</div>
+    <h1>Cómo leer el Tablero Comercial.<br>Qué pregunta responde cada vista y qué decisiones hay detrás.</h1>
+    <p class="sub">Guía de lectura para la versión pública del caso. Explica las cuatro vistas del tablero, las decisiones analíticas que las sustentan y qué se puede y no se puede concluir de un dataset k-anónimo.</p>
+    <div class="meta">
+      <div class="m"><div class="l">Autor</div><div class="v">Andrés Gómez · Agribusiness Data Analyst</div></div>
+      <div class="m"><div class="l">Dataset</div><div class="v">33 clientes B2B · k ≥ 5 · celdas ≥ 10</div></div>
+      <div class="m"><div class="l">Stack</div><div class="v">Python · Polars · DuckDB · Streamlit · Plotly</div></div>
+    </div>
+  </div></div>
+
+  <div class="toc">
+    <h2>Contenido</h2>
+    <ol>
+      <li><b>00 · Gobernanza</b> — cómo se protegió la información.</li>
+      <li><b>01 · Ventas por canal</b> — ¿cómo van las ventas y qué canal crece?</li>
+      <li><b>02 · Dinámica regional</b> — ¿de dónde viene la venta?</li>
+      <li><b>03 · Alertas y riesgos</b> — ¿qué clientes se están yendo?</li>
+      <li><b>04 · Portafolio</b> — ¿qué clientes son estratégicos?</li>
+      <li><b>Qué NO muestra esta versión</b> — límites de la anonimización.</li>
+      <li><b>Para el analista que audita</b> — cómo verificar las decisiones.</li>
+    </ol>
+  </div>
+
+  <!-- 0 · CÓMO LEER ESTA GUÍA -->
+  <section>
+    <div class="sh"><span class="n gold">0</span><h2>Cómo leer esta guía</h2></div>
+    <div class="blk gold">
+      <p>Este tablero es la <b>versión pública k-anonimizada</b> de un caso real de analítica comercial B2B en el sector agroindustrial de berries. Los datos originales están bajo confidencialidad con el cliente; lo que ves aquí es un derivado que no permite identificar a clientes, personas ni transacciones.</p>
+      <p>La guía está escrita para tres audiencias:</p>
+      <ul>
+        <li><b>Reclutadores y hiring managers</b> que quieren entender el razonamiento detrás del dashboard en 10 minutos.</li>
+        <li><b>Analistas</b> que quieren auditar las decisiones y la metodología.</li>
+        <li><b>Curiosos del dominio</b> que quieren ver cómo se traduce un problema agroindustrial real en preguntas de decisión.</li>
+      </ul>
+      <div class="call b"><b>Origen del caso:</b> el proyecto pasó por cuatro fases antes de llegar aquí — trabajo con la empresa → entrega en Excel + Tableau → réplica en Streamlit → anonimización y publicación. La historia completa está en el README del repositorio.</div>
+    </div>
+  </section>
+
+  <!-- 00 · GOBERNANZA -->
+  <section>
+    <div class="sh"><span class="n">00</span><h2>Gobernanza · cómo se protegió la información</h2></div>
+    <p class="intro">La primera pestaña del tablero no es analítica: es de gobernanza. No es un anexo, es parte del entregable.</p>
+    <div class="blk">
+      <h3>Qué muestra</h3>
+      <ul>
+        <li><b>Técnicas de anonimización aplicadas:</b> agregación, k-anonimato (k ≥ 5), supresión de celdas con &lt; 10 contribuyentes, generalización de categorías, redondeo y perturbación.</li>
+        <li><b>Umbrales:</b> k ≥ 5 y celdas ≥ 10 en toda celda publicada.</li>
+        <li><b>Nota de transparencia:</b> qué categorías se suprimieron o generalizaron por tamaño, y por qué.</li>
+        <li><b>Reporte de validación:</b> enlace a <code>data/public/validacion.txt</code>, con los ataques de reidentificación y el test de reconstrucción de precio.</li>
+      </ul>
+      <h4>Por qué está en el tablero</h4>
+      <p>Un dashboard que se presenta como "público con datos reales" tiene una obligación: <b>explicar cómo se protegió la información</b>. Sin esta vista, el tablero sería una promesa sin respaldo. Con ella, el lector puede auditar la garantía.</p>
+      <div class="call g"><b>Lección:</b> la gobernanza no es un trámite legal. Es lo que permite publicar el caso sin exponer al cliente. Un analista que sabe anonimizar es más valioso que uno que solo sabe visualizar.</div>
+    </div>
+  </section>
+
+  <!-- 01 · VENTAS POR CANAL -->
+  <section>
+    <div class="sh"><span class="n">01</span><h2>Ventas por canal · ¿cómo van las ventas y qué canal crece?</h2></div>
+    <p class="intro">La vista del termómetro comercial. Responde la pregunta más básica del comité: ¿estamos creciendo o cayendo, y quién nos está empujando?</p>
+    <div class="blk">
+      <h3>Las tres tarjetas</h3>
+      <table>
+        <tr><th>Métrica</th><th>Qué mide</th><th>Por qué importa</th></tr>
+        <tr><td><b>Venta neta B2B total</b></td><td>Suma de ventas netas del universo B2B en el período</td><td>Termómetro de salud comercial</td></tr>
+        <tr><td><b>Canal líder</b></td><td>Canal con mayor venta neta en el período</td><td>Dónde está concentrada la venta</td></tr>
+        <tr><td><b>Canales visibles</b></td><td>Canales con ≥ 10 contribuyentes</td><td>Cuánto del universo se puede mostrar sin romper el k-anonimato</td></tr>
+      </table>
+      <h4>La decisión analítica clave</h4>
+      <p>Las métricas son <b>precio-neutrales en kilogramos</b> para las alertas (decisión D01 en el cerebro). En esta vista, la venta neta se publica en pesos, pero la alerta de retención se calcula en kg. La razón: un cambio de precio no puede hacer parecer que un cliente compra menos cuando compra lo mismo.</p>
+      <div class="call r"><b>Nota pública:</b> el canal Retail (8 clientes) está suprimido porque no alcanza el umbral de 10 contribuyentes. El análisis público cubre 2 de los 3 canales. La lectura completa existe en el nivel local pseudonimizado (decisión D04).</div>
+    </div>
+  </section>
+
+  <!-- 02 · DINÁMICA REGIONAL -->
+  <section>
+    <div class="sh"><span class="n">02</span><h2>Dinámica regional · ¿de dónde viene la venta?</h2></div>
+    <p class="intro">La vista de la geografía comercial. Responde: ¿la venta está concentrada en el Centro o distribuida en el resto del país?</p>
+    <div class="blk">
+      <h3>Las dos vistas</h3>
+      <ul>
+        <li><b>Distribución Centro vs Resto:</b> dona con la participación de cada macro-región en la venta total.</li>
+        <li><b>Concentración por temporada:</b> línea con el porcentaje del Centro a lo largo del tiempo. Permite ver si la dependencia geográfica aumenta o disminuye.</li>
+      </ul>
+      <h4>La decisión analítica clave</h4>
+      <p>Las 7 regiones originales se agruparon en 2 macro-regiones — "Centro" (Bogotá + Sabana) y "Resto de regiones" — porque varias regiones individuales no alcanzaban 10 clientes. Los 3 clientes con cobertura nacional se diluyeron en "Resto" para evitar singularización (decisiones D05 y D06).</p>
+      <div class="call r"><b>Nota pública:</b> la versión pública no distingue Bogotá de Sabana, ni las regiones individuales del Resto. Es el precio de la anonimización: se gana protección, se pierde granularidad.</div>
+    </div>
+  </section>
+
+  <!-- 03 · ALERTAS Y RIESGOS -->
+  <section>
+    <div class="sh"><span class="n terra">03</span><h2>Alertas y riesgos · ¿qué clientes se están yendo?</h2></div>
+    <p class="intro">La vista estrella del tablero. La que se proyecta en el comité. La que convierte el dashboard en una herramienta de retención.</p>
+    <div class="blk terra">
+      <h3>La pregunta de negocio</h3>
+      <p>Un cliente B2B que reduce su compra de forma sostenida es una fuga en cámara lenta. Detectarla dos meses antes de que se consolide permite intervenir con margen. Detectarla cuando ya se fue no sirve de nada.</p>
+      <h4>La decisión D01 · kilogramos, no pesos</h4>
+      <p>La alerta se calcula en kilogramos. Si se calculara en pesos, una caída de precio activaría una falsa alerta de fuga aunque el cliente siga comprando el mismo volumen. Es la decisión más citada del proyecto porque evita un sesgo clásico.</p>
+      <h4>La decisión D02 · dos meses consecutivos</h4>
+      <p>Una caída de un solo mes <b>no activa alerta</b>. Se requieren dos meses consecutivos para confirmar tendencia. La estacionalidad mensual de las berries produce baches que no son señal de fuga. Se probaron ventanas de 1, 2 y 3 meses: una disparaba ruido, tres llegaba tarde al comité.</p>
+      <h4>Cómo se lee el semáforo</h4>
+      <table>
+        <tr><th>Nivel</th><th>Qué significa</th></tr>
+        <tr><td><span class="dot r"></span><b>Alto riesgo</b></td><td>Caída ≥ 30% sostenida 2 meses consecutivos</td></tr>
+        <tr><td><span class="dot y"></span><b>Riesgo medio</b></td><td>Caída entre 15% y 30%, sostenida 2 meses</td></tr>
+        <tr><td><span class="dot g"></span><b>Estable</b></td><td>Compra normal, o caída no repetida</td></tr>
+      </table>
+      <h4>Qué ve el lector en la versión pública</h4>
+      <p>Agregados por nivel de riesgo, no clientes individuales. Se muestra: cuántos clientes están en cada nivel, cuántos kg están en riesgo en total, y cómo evoluciona el semáforo mes a mes. La lista por cliente existe solo en el nivel local pseudonimizado (decisión D08).</p>
+      <div class="call g"><b>Lección:</b> una alerta útil no es la que más rápido dispara, sino la que dispara por la razón correcta. La ventana de 2 meses y la métrica en kg son la diferencia entre un semáforo que el comité usa y uno que ignora.</div>
+    </div>
+  </section>
+
+  <!-- 04 · PORTAFOLIO -->
+  <section>
+    <div class="sh"><span class="n blue">04</span><h2>Portafolio · ¿qué clientes son estratégicos?</h2></div>
+    <p class="intro">La vista estratégica. Responde: ¿qué clientes compran una sola especie (oportunidad de cross-sell) y cuáles concentran la venta (cuentas estratégicas)?</p>
+    <div class="blk blue">
+      <h3>Las cuatro tarjetas</h3>
+      <ul>
+        <li><b>Total de clientes</b> en el universo B2B activo.</li>
+        <li><b>Clientes cautivos:</b> los que tienen ≥ 80% de su volumen en una sola especie (umbral D09).</li>
+        <li><b>Clientes de alto valor:</b> los que concentran el 80% de la venta (Pareto).</li>
+        <li><b>Concentración Pareto:</b> en qué bucket cae el índice (≤10%, 10-20%, 20-30%, >30%).</li>
+      </ul>
+      <h4>La decisión analítica clave</h4>
+      <p>El índice de Pareto se publica como bucket, no como número exacto (decisión D07). Publicar "N clientes concentran el 80%" permitiría inferir la distribución de la base. El bucket conserva la lectura cualitativa sin exponer el dato fino.</p>
+      <div class="call r"><b>Nota pública:</b> la matriz cliente × especie (la versión completa del análisis) no se publica. Se muestra la distribución cautivo/diversificado y las métricas globales. La vista operativa por cuenta existe solo en el nivel local pseudonimizado (decisión D08).</div>
+    </div>
+  </section>
+
+  <!-- QUÉ NO MUESTRA -->
+  <section>
+    <div class="sh"><span class="n gold">!</span><h2>Qué NO muestra esta versión pública</h2></div>
+    <p class="intro">Un tablero honesto declara sus límites. Estos son los de la versión pública, en orden de importancia para el lector.</p>
+    <div class="blk gold">
+      <table>
+        <tr><th>Qué no se ve</th><th>Por qué</th><th>Decisión</th></tr>
+        <tr><td>Canal Retail</td><td>8 clientes &lt; umbral de 10 contribuyentes</td><td>D04</td></tr>
+        <tr><td>Regiones finas (Bogotá, Sabana, etc.)</td><td>Riesgo de singularización con &lt; 10 clientes</td><td>D05</td></tr>
+        <tr><td>Clientes con cobertura nacional como categoría</td><td>3 clientes serían identificables</td><td>D06</td></tr>
+        <tr><td>Número exacto de Pareto</td><td>Permitiría inferir la distribución</td><td>D07</td></tr>
+        <tr><td>Matriz cliente × especie</td><td>Identificaría clientes individuales</td><td>D08</td></tr>
+        <tr><td>Precios, márgenes, descuentos</td><td>Condición expresa del NDA con el cliente</td><td>L07</td></tr>
+        <tr><td>Backtest formal de la ventana de retención</td><td>Pendiente: es un criterio operativo, no un experimento</td><td>L01</td></tr>
+      </table>
+      <p style="margin-top:12px">El detalle completo está en <code>cerebro-berries-public.md</code>, secciones 6 (limitaciones) y 8 (roadmap público).</p>
+    </div>
+  </section>
+
+  <!-- PARA EL ANALISTA -->
+  <section>
+    <div class="sh"><span class="n blue">A</span><h2>Para el analista que audita este caso</h2></div>
+    <p class="intro">Si tu rol es evaluar la calidad del análisis, estos son los tres artefactos que debes abrir, en orden.</p>
+    <div class="blk blue">
+      <div class="el">
+        <h5>1 · <code>cerebro-berries-public.md</code></h5>
+        <p>Registro de 14 decisiones, 9 supuestos, glosario, 7 limitaciones y roadmap. Es el documento que permite auditar el razonamiento sin leer el código ni acceder a los datos originales. <b>Empieza aquí.</b></p>
+      </div>
+      <div class="el">
+        <h5>2 · <code>data/public/validacion.txt</code></h5>
+        <p>Reporte de los 5 ataques estándar de anonimización (singularización, membresía, divulgación de atributo, identificadores, celdas ≥ 10) más el test de reconstrucción de precio. Es la evidencia técnica de la gobernanza.</p>
+      </div>
+      <div class="el">
+        <h5>3 · <code>src/berrix/app_public.py</code> + demo en vivo</h5>
+        <p>Código del dashboard y demo pública en Streamlit Cloud. Permite verificar que las métricas del tablero coinciden con las decisiones documentadas.</p>
+      </div>
+      <h4>Preguntas que un revisor debería hacerse</h4>
+      <ul>
+        <li>¿Las cuatro vistas responden preguntas de negocio reales o son ejercicios de visualización?</li>
+        <li>¿Las decisiones D01–D14 tienen justificación suficiente? ¿Cuáles carecen de evidencia cuantitativa (limitaciones L01)?</li>
+        <li>¿La anonimización resiste los ataques estándar? ¿Hay riesgos residuales documentados?</li>
+        <li>¿El dataset público permite reconstruir precios? (No debería, por el test de precio.)</li>
+        <li>¿El código es reproducible? ¿El README permite a alguien clonar y ejecutar sin fricción?</li>
+      </ul>
+      <div class="call b"><b>Cómo reproducir:</b> <code>uv sync</code> y luego <code>uv run streamlit run src/berrix/app_public.py</code>. Alternativa con pip: <code>pip install -r requirements.txt</code> y <code>streamlit run src/berrix/app_public.py</code>.</div>
+    </div>
+  </section>
+
+</div>
+
+<footer>
+  <svg><use href="#ag6"/></svg>
+  <span>Guía elaborada por <b>Andrés Gómez</b> · Agribusiness Data Analyst · para la versión pública de <b>berries-dashboard</b>.</span>
+</footer>
+
+</body>
+</html>
