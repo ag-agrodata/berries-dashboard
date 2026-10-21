@@ -2,3 +2,4 @@ streamlit==1.61.1
 polars==1.43.2
 pandas==3.0.5
 plotly==6.9.0
+duckdb>=1.0
