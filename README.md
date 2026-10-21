@@ -1,28 +1,39 @@
 [🇬🇧 English](README.md) · [🇪🇸 Español](README.es.md)
 
-<div align="center">
-  <img src="src/berrix/assets/ag6.svg" alt="AG · Andrés Gómez" width="140">
+![AG · Andrés Gómez](https://github.com/ag-agrodata/berries-dashboard/raw/main/src/berrix/assets/ag6.svg)
 
-  # Commercial Dashboard · Berrix
+# Commercial Dashboard · Berrix
 
-  **B2B sales analytics for the berry agro-industry**
+**B2B sales analytics for the berry agribusiness**
 
-  A real commercial analytics case — anonymized and reproducible.
+A real commercial analytics case — anonymized and reproducible.
 
-  [![Python](https://img.shields.io/badge/Python-3.13-1B4332?style=flat-square&logo=python&logoColor=white)](https://www.python.org/)
-  [![Streamlit](https://img.shields.io/badge/Streamlit-1.61-1B4332?style=flat-square&logo=streamlit&logoColor=white)](https://streamlit.io/)
-  [![Polars](https://img.shields.io/badge/Polars-1.43-2C5F7C?style=flat-square)](https://pola.rs/)
-  [![DuckDB](https://img.shields.io/badge/DuckDB-SQL-2C5F7C?style=flat-square&logo=duckdb&logoColor=white)](https://duckdb.org/)
-  [![Plotly](https://img.shields.io/badge/Plotly-6.9-BC6C25?style=flat-square&logo=plotly&logoColor=white)](https://plotly.com/)
-</div>
+[![Python](https://img.shields.io/badge/Python-3.13-1B4332?style=flat-square&logo=python&logoColor=white)](https://www.python.org/) [![Streamlit](https://img.shields.io/badge/Streamlit-1.61-1B4332?style=flat-square&logo=streamlit&logoColor=white)](https://streamlit.io/) [![Polars](https://img.shields.io/badge/Polars-1.43-2C5F7C?style=flat-square)](https://pola.rs/) [![DuckDB](https://img.shields.io/badge/DuckDB-SQL-2C5F7C?style=flat-square&logo=duckdb&logoColor=white)](https://duckdb.org/) [![Plotly](https://img.shields.io/badge/Plotly-6.9-BC6C25?style=flat-square&logo=plotly&logoColor=white)](https://plotly.com/)
 
 ---
 
+## 2-minute summary
+
+A dashboard that turns B2B sales transactions into four decision questions for an agribusiness commercial committee: how sales are trending by channel, where revenue comes from by region, which customers are steadily reducing purchases, and which accounts buy only one species. Built on real anonymized data (33 B2B customers, k ≥ 5), with a public demo and a documented anonymization methodology.
+
 ## The problem
 
-Commercial teams at agro-industrial companies often navigate disconnected spreadsheets, manual analyses, and decisions based on averages that hide the real picture. When information is fragmented, the commercial committee misses trends, fails to spot risks in time, and cannot prioritize actions with data.
+Commercial teams at agribusiness companies often navigate disconnected spreadsheets, manual analyses, and decisions based on averages that hide the real picture. When information is fragmented, the commercial committee misses trends, fails to spot risks in time, and cannot prioritize actions with data.
 
 The question this project answers: **how do you turn B2B sales transactional data into a daily decision-making instrument for a commercial team?**
+
+## The four phases of the project
+
+This project did not start as a public dashboard. It started as a real engagement inside an agribusiness company, and went through four phases before becoming the reproducible case you are reading.
+
+| Phase | What happened | Deliverable |
+|---|---|---|
+| **1 · Working with the company** | Review of the spreadsheets behind orders, dispatches, sales reports and billing. Understanding of the real commercial flow and the questions the committee needed to answer. | Data model and decision questions |
+| **2 · Corporate delivery** | The company's corporate framework was **Excel + Tableau**. The original delivery was built in that stack. The company is migrating to **SAP**; an Excel-to-SAP migration is projected to ensure continuity, but **it was not part of this phase**. | Tableau dashboard |
+| **3 · Streamlit replication** | The Tableau project was replicated as a functional **Streamlit** app (Python, Polars, DuckDB, Plotly), with the same data model and the same decision questions. | Internal Streamlit app |
+| **4 · Anonymization and publication** | A **k-anonymous** version (k ≥ 5, cell suppression < 10, generalization, rounding and perturbation) was derived from the replicated project so it could be published without exposing confidential information. | This public repository |
+
+**Why this history matters:** it shows the project is not an academic exercise. It was born from a real problem, delivered in the stack the company already used, replicated in a reproducible stack, and anonymized with verifiable standards. That chain —company → Tableau → Streamlit → public— is part of the value of the case.
 
 ## What this dashboard does
 
@@ -36,15 +47,49 @@ The dashboard structures commercial information across four interconnected views
 | 📦 **04 · Portfolio** | Which customers buy only one species, and which are the strategic accounts? |
 | 🛡️ **00 · Governance** | How was the data anonymized and which techniques were applied? |
 
-### Design decisions
+## What this project demonstrates
 
-- **Price-neutral metrics in kilograms** for retention alerts (D03): a price change should never make a customer look like they are buying less when they are buying the same volume.
-- **Retention traffic light with sustainability rule**: a single-month dip does not trigger an alert; the signal must hold for 2 consecutive months to be confirmed.
-- **Golden rule for the B2B universe**: any transaction that does not match the target customer table is excluded from the analysis.
+- **Covering the full lifecycle of a data project:** from working with the company and reviewing its spreadsheets, through delivery in the corporate stack (Excel + Tableau), replication in a reproducible stack (Streamlit), and anonymization for publication.
+- **Translating a diffuse commercial problem into measurable decision questions:** every view answers a specific committee question.
+- **Choosing metrics that avoid bias:** kilograms instead of currency so a price change does not look like a drop in purchase.
+- **Designing rules that reduce false positives:** retention traffic light with two consecutive months, not one.
+- **Defining a defensible analytical universe:** B2B golden rule, excluding transactions without a match in the target customer table.
+- **Anonymizing without destroying signal:** k-anonymity, suppression, generalization, rounding and perturbation.
+- **Building for a meeting, not for a report:** four views plus governance, live demo.
+
+## Design decisions
+
+### 1 · Price-neutral metrics in kilograms for alerts (D03)
+
+A price change should never make a customer look like they are buying less when they are buying the same volume. That is why retention alerts are computed in kilograms, not in currency. Using monetary value, a price drop could trigger a false churn alert.
+
+### 2 · Retention traffic light with a sustainability rule
+
+A single-month dip does not trigger an alert: **two consecutive months** are required to confirm a trend. Two months is the minimum that removes most false positives from monthly seasonality without delaying the alert more than one week of commercial planning. One-month and three-month windows were tested: one fired noise, three arrived late to the committee.
+
+### 3 · Golden rule for the B2B universe
+
+Any transaction that does not match the target customer table is excluded from the analysis. It is not imputed or approximated: it is excluded. This keeps the universe clean and prevents the analysis from being contaminated by non-attributable transactions.
+
+## Recommendations and impact
+
+> **Transparency note:** the figures in this section are estimates under NDA. Exact figures are confidential; ranges are presented to give scale to the case and must be validated before being used in a presentation.
+
+### 1 · Activate a retention plan for at-risk accounts
+
+The retention traffic light identifies customers with a sustained purchase decline over two consecutive months. The operational recommendation is for the commercial committee to review those accounts in the same session and assign a contact owner before the decline consolidates over the quarter. The estimated impact depends on the value of the retained account: an account with an annual contract in the [X–Y] range represents preserved revenue if action is taken in time.
+
+### 2 · Prioritize cross-selling to single-species customers
+
+The portfolio view identifies customers who buy only one species. The recommendation is to prioritize a second-species offer to accounts with the highest volume and lowest diversification, with a target of [X]% penetration in [Y] months.
+
+### 3 · Review commercial coverage by region
+
+The regional dynamics view shows revenue concentration. The recommendation is to review whether commercial effort is aligned with revenue distribution and adjust coverage in regions with the highest uncaptured potential.
 
 ## Data governance
 
-This project works with **k-anonymous derived data**, generated from a real case under a confidentiality agreement. The original information is never published.
+This project works with **k-anonymous derived data**, generated from a real case of **33 B2B customers** under a confidentiality agreement. The original information is never published.
 
 Anonymization techniques applied (per the Methods Certificate):
 
@@ -56,7 +101,11 @@ Anonymization techniques applied (per the Methods Certificate):
 
 The full methodology is documented in [`build_public.py`](src/berrix/build_public.py).
 
-> ⚠️ **Transparency note:** due to the size of the B2B base, some categories with few contributors are generalized or suppressed to guarantee k ≥ 5 and cells ≥ 10. The detailed per-customer analysis exists only at the local pseudonymized level, under the confidentiality agreement.
+> ⚠️ **Transparency note:** due to the size of the B2B base (33 customers), some categories with few contributors are generalized or suppressed to guarantee k ≥ 5 and cells ≥ 10. The detailed per-customer analysis exists only at the local pseudonymized level, under the confidentiality agreement.
+
+## Companion project
+
+This case is complemented by [cosecha-public](https://github.com/ag-agrodata/cosecha-public), a prescriptive harvest planner for blueberries: the other end of the agribusiness value chain. While this dashboard looks at the commercial committee, `cosecha-public` looks at harvest operations, headcount and cost.
 
 ## Tech stack
 
@@ -88,12 +137,13 @@ berries-dashboard/
 ├── .streamlit/
 │   └── config.toml             # AG brand identity
 ├── requirements.txt
+├── LICENSE
 └── README.md
 ```
 
 ## Local execution
 
-```text
+```
 # Clone the repo
 git clone https://github.com/ag-agrodata/berries-dashboard.git
 cd berries-dashboard
@@ -113,10 +163,17 @@ streamlit run src/berrix/app_public.py
 
 ## License
 
-This project is released under the MIT License. The included data are k-anonymous derivatives and contain no identifiable information about third parties.
+This project uses a layered license:
 
-<div align="center">
-Built by Andrés Gómez · Agribusiness Data Analyst · 
+- **Code** (`src/`, `.streamlit/`, `requirements.txt`): [MIT](LICENSE).
+- **Data** (`data/public/`): [Data Use Agreement](LICENSE-DATA) — non-commercial, no re-identification, no price inference, attribution required.
+- **Documentation** (`docs/`, READMEs): [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/).
+
+> ⚠️ k-anonymized datasets are published for demonstration purposes, in accordance with the confidentiality agreement with the client. Any attempt to re-identify clients, individuals, or transactions, or to infer prices, margins, or contractual terms, is expressly prohibited. See [LICENSE-DATA](LICENSE-DATA) for the full terms.
+
+---
+
+**Andrés Gómez**
+Agribusiness Data Analyst
 "I turn the complexity of the field into data-driven decisions."
 afgomez.agroindustrial@gmail.com
-</div>

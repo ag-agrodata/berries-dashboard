@@ -1,0 +1,192 @@
+ACUERDO DE USO DE DATOS / DATA USE AGREEMENT (DUA)
+berries-dashboard · data/public/
+
+Versión 1.0 · 21 de octubre de 2026
+Titular: Andrés Gómez <afgomez.agroindustrial@gmail.com>
+
+================================================================================
+RESUMEN EN UNA FRASE
+================================================================================
+
+Puedes usar los datos públicos de este repositorio para aprender, enseñar,
+investigar y demostrar, siempre que no intentes identificar a clientes,
+personas o transacciones, ni reconstruir precios, márgenes o términos
+comerciales.
+
+================================================================================
+1. OBJETO Y ALCANCE
+================================================================================
+
+Este Acuerdo regula el uso de los archivos de datos ubicados en:
+
+  data/public/*.parquet
+
+(en adelante, "los Datos"). Los Datos son derivados k-anónimos de un caso real
+de analítica comercial B2B en el sector agroindustrial de berries, publicados
+conforme al acuerdo de confidencialidad (NDA) suscrito con el cliente.
+
+El código fuente de este repositorio se distribuye por separado bajo la
+Licencia MIT (ver archivo LICENSE). La documentación se distribuye bajo
+CC BY 4.0.
+
+================================================================================
+2. DEFINICIONES
+================================================================================
+
+"Cliente": la organización titular de los datos operativos originales.
+
+"Persona": cualquier trabajador, colaborador, proveedor o contacto cuya
+información, directa o indirecta, pueda estar contenida en los Datos
+originales.
+
+"Reidentificación": cualquier proceso, manual o automatizado, que permita
+vincular un registro de los Datos con un Cliente, una Persona, un predio, un
+bloque, una transacción específica o cualquier otra entidad singular.
+
+"Inferencia de precios": cualquier proceso que permita reconstruir, total o
+parcialmente, precios unitarios, márgenes, descuentos, condiciones de pago o
+términos contractuales a partir de los Datos, ya sea por cálculo directo,
+agregación, cruce o modelado.
+
+"Linkage": cualquier cruce de los Datos con otras fuentes, públicas o
+privadas, para enriquecer, des-anonimizar o inferir información no contenida
+explícitamente en los Datos.
+
+================================================================================
+3. LICENCIA OTORGADA (USO PERMITIDO)
+================================================================================
+
+El titular otorga una licencia mundial, no exclusiva, no transferible y
+revocable para:
+
+  a) Usar, copiar y ejecutar los Datos con fines de aprendizaje, docencia,
+     investigación académica, análisis personal y demostración de portafolio.
+  b) Crear visualizaciones, reportes y análisis derivados, siempre que se
+     respeten las restricciones de las cláusulas 4, 5 y 6.
+  c) Citar los Datos en publicaciones, con la atribución descrita en la
+     cláusula 7.
+
+================================================================================
+4. RESTRICCIÓN: NO REIDENTIFICACIÓN
+================================================================================
+
+Queda expresamente prohibido:
+
+  a) Intentar identificar al Cliente, a cualquier Persona, predio, bloque,
+     transacción o cuenta específica.
+  b) Cruzar los Datos con otras fuentes para intentar reidentificar registros.
+  c) Publicar o difundir cualquier resultado que permita, directa o
+     indirectamente, la reidentificación.
+
+================================================================================
+5. RESTRICCIÓN: NO INFERENCIA DE PRECIOS
+================================================================================
+
+Queda expresamente prohibido:
+
+  a) Reconstruir precios unitarios, márgenes, descuentos, condiciones de pago
+     o términos contractuales a partir de los Datos.
+  b) Calcular ratios que, combinados con otras variables publicadas, permitan
+     derivar precios (por ejemplo, dividir valor monetario entre kilogramos
+     cuando ambos coexistan en la misma fila).
+  c) Usar los Datos para inferir la estructura de costos del Cliente o de sus
+     contrapartes comerciales.
+
+Esta restricción es una condición del NDA suscrito con el Cliente y prevalece
+sobre cualquier otra disposición de este Acuerdo.
+
+================================================================================
+6. RESTRICCIÓN: NO LINKAGE
+================================================================================
+
+Queda expresamente prohibido cruzar los Datos con:
+
+  a) Otras bases de datos del sector agroindustrial.
+  b) Datos públicos o privados de clientes, proveedores o competidores.
+  c) Cualquier fuente que permita enriquecer los registros hasta un nivel que
+     facilite la reidentificación o la inferencia de precios.
+
+================================================================================
+7. ATRIBUCIÓN
+================================================================================
+
+Todo uso de los Datos debe incluir atribución visible al autor y al
+repositorio:
+
+  "Datos: Andrés Gómez, berries-dashboard (github.com/ag-agrodata/berries-dashboard),
+   utilizados bajo el Acuerdo de Uso de Datos."
+
+La atribución debe aparecer en publicaciones, presentaciones, repositorios
+derivados y cualquier obra que use los Datos.
+
+================================================================================
+8. REDISTRIBUCIÓN
+================================================================================
+
+Queda prohibida la redistribución de los Datos sin autorización escrita del
+titular. Si se autoriza, la redistribución debe:
+
+  a) Mantener este Acuerdo íntegro.
+  b) No imponer términos adicionales.
+  c) Conservar la atribución de la cláusula 7.
+
+================================================================================
+9. SIN GARANTÍAS
+================================================================================
+
+Los Datos se proporcionan "tal cual" ("as is"), sin garantía de exactitud,
+integridad, actualidad o idoneidad para un propósito particular. El titular no
+será responsable de ningún daño derivado del uso de los Datos.
+
+================================================================================
+10. TERMINACIÓN
+================================================================================
+
+El incumplimiento de cualquiera de las cláusulas 4, 5, 6, 7 u 8 revoca
+automáticamente la licencia otorgada en la cláusula 3. El usuario deberá
+cesar todo uso de los Datos y eliminar las copias en su posesión.
+
+================================================================================
+11. LEY APLICABLE
+================================================================================
+
+Este Acuerdo se rige por las leyes de la República de Colombia. Cualquier
+controversia se someterá a los jueces competentes de la ciudad de Bogotá D.C.
+
+================================================================================
+12. NOTA SOBRE EL NDA
+================================================================================
+
+Los Datos son derivados k-anónimos publicados conforme al acuerdo de
+confidencialidad suscrito con el Cliente. La publicación fue autorizada bajo
+la condición expresa de que:
+
+  a) No se pueda identificar al Cliente ni a personas.
+  b) No se pueda reconstruir información sensible, incluidos precios.
+
+Este Acuerdo implementa esas condiciones en el plano legal. La implementación
+técnica (k-anonimato k ≥ 5, supresión de celdas < 10, generalización, redondeo
+y perturbación, y exclusión de campos de precio) está documentada en
+src/berrix/build_public.py y verificada en data/public/validacion.txt.
+
+================================================================================
+CONTACTO
+================================================================================
+
+Para solicitar autorización de redistribución, aclaraciones o reportar un
+posible incumplimiento:
+
+  Andrés Gómez
+  afgomez.agroindustrial@gmail.com
+  github.com/ag-agrodata
+
+================================================================================
+ENGLISH SUMMARY (NON-BINDING)
+================================================================================
+
+You may use the public data in data/public/ for learning, teaching, research
+and portfolio demonstration. You may NOT attempt to re-identify clients,
+persons or transactions, nor to reconstruct prices, margins or commercial
+terms. Linking with other sources to enrich or re-identify is prohibited.
+Attribution is required. Redistribution requires written permission. This
+summary is non-binding; the Spanish text above governs.
