@@ -1,6 +1,6 @@
 [🇬🇧 English](README.md) · [🇪🇸 Español](README.es.md)
 
-![AG · Andrés Gómez](https://github.com/ag-agrodata/berries-dashboard/raw/main/src/berrix/assets/ag6.svg)
+<img src="src/berrix/assets/ag6.svg" alt="AG · Andrés Gómez" width="180"/>
 
 # Commercial Dashboard · Berrix
 
