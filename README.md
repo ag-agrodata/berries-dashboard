@@ -126,18 +126,24 @@ berries-dashboard/
 │   └── berrix/
 │       ├── app_public.py       # Public Streamlit dashboard
 │       ├── build_public.py     # Anonymization methodology
+│       ├── i18n.py             # ES/EN copy and display maps
 │       └── assets/
 │           └── ag6.svg         # AG v6 logo
 ├── data/
-│   └── public/                 # k-anonymous data only
-│       ├── d01_*.parquet
-│       ├── d02_*.parquet
-│       ├── d03_*.parquet
-│       └── d04_*.parquet
+│   └── public/                 # k-anonymous data only (8 parquet tables)
+│       ├── d01_canal_publico.parquet
+│       ├── d01_temporada_publico.parquet
+│       ├── d02_concentracion_publico.parquet
+│       ├── d02_macro_region_publico.parquet
+│       ├── d03_alertas_publico.parquet
+│       ├── d03_alertas_total_publico.parquet
+│       ├── d04_portafolio_publico.parquet
+│       └── d04_portafolio_global_publico.parquet
 ├── .streamlit/
 │   └── config.toml             # AG brand identity
 ├── requirements.txt
 ├── LICENSE
+├── LICENSE-DATA
 └── README.md
 ```
 
