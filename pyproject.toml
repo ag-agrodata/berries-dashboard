@@ -1,0 +1,74 @@
+# ============================================================================
+# berries-dashboard · pyproject.toml
+# ============================================================================
+# Fuente de verdad de dependencias del proyecto.
+#
+# Este archivo está diseñado para la versión PÚBLICA del caso. No empaqueta
+# el proyecto como librería (package = false): el repositorio es una
+# aplicación, no un paquete distribuible en PyPI. Esto evita arrastrar
+# build-system, __init__.py y entry points que la versión pública no usa.
+#
+# Flujo de trabajo:
+#   uv sync                                  # crea .venv con deps exactas del lock
+#   uv lock                                  # regenera uv.lock
+#   uv run streamlit run src/berrix/app_public.py
+#   uv run python src/berrix/build_public.py
+#
+# Regenerar requirements.txt (compatibilidad con pip):
+#   uv export --format requirements-txt --no-hashes > requirements.txt
+#
+# ============================================================================
+
+[project]
+name = "berries-dashboard"
+version = "1.0.0"
+description = "Public B2B commercial dashboard for the berry agro-industry · k-anonymous data · Streamlit + Polars + DuckDB + Plotly"
+readme = "README.md"
+license = { file = "LICENSE" }
+requires-python = ">=3.13"
+
+authors = [
+    { name = "Andrés Gómez", email = "afgomez.agroindustrial@gmail.com" },
+]
+
+keywords = [
+    "agribusiness",
+    "agroindustria",
+    "b2b-sales",
+    "streamlit",
+    "polars",
+    "duckdb",
+    "plotly",
+    "k-anonymity",
+    "data-governance",
+    "data-portfolio",
+]
+
+classifiers = [
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3.13",
+    "Topic :: Scientific/Engineering :: Information Analysis",
+    "Intended Audience :: Science/Research",
+    "Natural Language :: Spanish",
+    "Natural Language :: English",
+]
+
+dependencies = [
+    "streamlit>=1.61.1",
+    "polars>=1.43.2",
+    "pandas>=3.0.6",
+    "plotly>=6.9.0",
+    "duckdb>=1.5.5",
+    "pyarrow>=15.0",
+]
+
+# ============================================================================
+# Configuración de uv
+# ============================================================================
+# package = false indica que el proyecto NO debe ser construido/instalado
+# como paquete. uv solo resolverá e instalará las dependencias declaradas
+# arriba. Esto es lo correcto para una aplicación de portafolio que no se
+# publica en PyPI.
+
+[tool.uv]
+package = false
