@@ -139,8 +139,16 @@ berries-dashboard/
 │       ├── d03_alertas_total_publico.parquet
 │       ├── d04_portafolio_publico.parquet
 │       └── d04_portafolio_global_publico.parquet
+├── docs/
+│   └── public/
+│       ├── cerebro-berries-public.md
+│       ├── guia-tablero-public.html
+│       └── en/
+│           ├── cerebro-berries-public.md
+│           └── guia-tablero-public.html
 ├── .streamlit/
 │   └── config.toml             # AG brand identity
+├── pyproject.toml
 ├── requirements.txt
 ├── LICENSE
 ├── LICENSE-DATA
