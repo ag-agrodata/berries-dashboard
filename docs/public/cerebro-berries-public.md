@@ -198,7 +198,7 @@ Por condición expresa del NDA, no se publican precios, márgenes ni términos c
 - **Reporte de validación:** [`data/public/validacion.txt`](data/public/validacion.txt).
 - **Herramientas de verificación:** [`tools/validacion_precio.py`](tools/validacion_precio.py) (test de reconstrucción de precio).
 - **Licencia de los datos:** [`LICENSE-DATA`](LICENSE-DATA) (DUA).
-- **Marco legal:** NDA con el cliente. La publicación de derivados fue autorizada bajo la condición de no identificabilidad y no inferencia de precios.
+- **Marco legal:** NDA con el cliente. La publicación de derivados fue autorizada bajo la condición de no identificabilidad y no inferencia de precios. El NDA se mantiene completo en el archivo privado del consultor: la destrucción de las bases originales y de productos identificables fue documentada bajo la clausula 6 del NDA, y el registro del Anexo B se mantiene en el archivo privado.
 
 ---
 
