@@ -14,7 +14,7 @@ Este documento es el registro de decisiones, supuestos, glosario y limitaciones 
 
 **Qué no es:** no es un sistema transaccional, no reemplaza al ERP, no produce pronósticos, no recomienda precios. Es una capa de lectura sobre datos ya consolidados.
 
-**Alcance del dataset público:** 33 clientes B2B, 3 canales comerciales (tras supresión), 2 macro-regiones, múltiples temporadas. Los datos son derivados k-anónimos del caso real, publicados conforme al NDA con el cliente (ver [`LICENSE-DATA`](LICENSE-DATA)).
+**Alcance del dataset público:** 33 clientes B2B, 3 canales comerciales (tras supresión), 2 macro-regiones, múltiples temporadas. El número exacto de clientes se publica con fines de escala; no permite identificar clientes individuales ni revelar la estructura de la cartera. Los datos son derivados k-anónimos del caso real, publicados conforme al NDA con el cliente (ver [`LICENSE-DATA`](LICENSE-DATA)).
 
 **Fases del proyecto:** el caso pasó por cuatro fases antes de llegar aquí (trabajo con la empresa → entrega en Excel + Tableau → réplica en Streamlit → anonimización y publicación). La historia completa está en la sección "Las cuatro fases" de los READMEs. Esa cadena es parte del valor del caso y no debe perderse en la documentación interna.
 

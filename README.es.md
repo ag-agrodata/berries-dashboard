@@ -16,6 +16,8 @@ Un caso real de análisis comercial, anonimizado y reproducible.
 
 Un tablero que convierte transacciones de venta B2B en cuatro preguntas de decisión para un comité comercial agroindustrial: cómo van las ventas por canal, de dónde viene la venta por región, qué clientes están reduciendo compra de forma sostenida y qué cuentas compran una sola especie. Construido sobre datos reales anonimizados (33 clientes B2B, k ≥ 5), con demo pública y metodología de anonimización documentada.
 
+> **Aviso legal:** El número exacto de clientes se publica con fines de escala; no permite identificar clientes individuales ni revelar la estructura de la cartera.
+
 ## El problema
 
 Los equipos comerciales de las empresas agroindustriales suelen navegar entre hojas de cálculo desconectadas, análisis manuales y decisiones basadas en promedios que esconden la realidad. Cuando la información está fragmentada, el comité comercial no ve tendencias, no detecta riesgos a tiempo y no prioriza acciones con datos.
@@ -59,7 +61,7 @@ El tablero estructura la información comercial en cuatro vistas interconectadas
 
 ## Decisiones de diseño
 
-### 1 · Métricas precio-neutrales en kilogramos para las alertas (D03)
+### 1 · Métricas precio-neutrales en kilogramos para las alertas
 
 Un cambio de precio nunca debe hacer parecer que un cliente compra menos cuando compra lo mismo. Por eso las alertas de retención se calculan en kilogramos, no en pesos. Si se usara valor monetario, una caída de precio podría activar una falsa alerta de fuga.
 
@@ -69,7 +71,7 @@ Una caída de un solo mes no activa alerta: se requieren **dos meses consecutivo
 
 ### 3 · Regla de oro del universo B2B
 
-Toda transacción que no hace match con la tabla de clientes objetivo queda fuera del análisis. No se imputa ni se aproxima: se excluye. Esto mantiene el universo limpio y evita que el análisis se contamine con transacciones no atribuibles.
+Toda transacción que no hace _match_ con la tabla de clientes objetivo queda fuera del análisis. No se imputa ni se aproxima: se excluye. Esto mantiene el universo limpio y evita que el análisis se contamine con transacciones no atribuibles.
 
 ## Recomendaciones e impacto
 
@@ -103,7 +105,7 @@ La metodología completa está documentada en [`build_public.py`](src/berrix/bui
 
 > ⚠️ **Nota de transparencia:** debido al tamaño de la base B2B (33 clientes), algunas categorías con pocos contribuyentes se generalizan o suprimen para garantizar k ≥ 5 y celdas ≥ 10. El análisis detallado por cliente individual existe únicamente en el nivel local pseudonimizado, conforme al acuerdo de confidencialidad.
 
-## Companion project
+## Proyecto acompañante
 
 Este caso se complementa con [cosecha-public](https://github.com/ag-agrodata/cosecha-public), un planificador operativo de cosecha de arándanos: el otro extremo de la cadena de valor agroindustrial. Mientras este tablero mira hacia el comité comercial, `cosecha-public` mira hacia la operación de cosecha, la dotación y el costo.
 
@@ -139,6 +141,9 @@ berries-dashboard/
 │       ├── d03_alertas_total_publico.parquet
 │       ├── d04_portafolio_publico.parquet
 │       └── d04_portafolio_global_publico.parquet
+├── tools/
+│   ├── validacion_anonimizacion.py
+│   └── README.md
 ├── docs/
 │   └── public/
 │       ├── cerebro-berries-public.md
@@ -148,6 +153,7 @@ berries-dashboard/
 │           └── guia-tablero-public.html
 ├── .streamlit/
 │   └── config.toml             # AG brand identity
+├── uv.lock
 ├── pyproject.toml
 ├── requirements.txt
 ├── LICENSE
@@ -157,12 +163,27 @@ berries-dashboard/
 
 ## Ejecución local
 
+### Opción A · uv (recomendada)
+
 ```
-# Clonar el repo
+# Clonar repositorio
 git clone https://github.com/ag-agrodata/berries-dashboard.git
 cd berries-dashboard
 
-# Crear entorno virtual e instalar dependencias
+# Sincronizar dependencias a instalar
+uv sync
+
+# Ejecutar el dashboard
+uv run streamlit run src/berrix/app_public.py
+```
+
+### Opción B · pip
+```
+# Clonar repositorio
+git clone https://github.com/ag-agrodata/berries-dashboard.git
+cd berries-dashboard
+
+# Crear un entorno virtual e instalar dependencias
 python -m venv .venv
 source .venv/bin/activate
 pip install -r requirements.txt

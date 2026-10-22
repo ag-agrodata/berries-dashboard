@@ -12,7 +12,7 @@
 #   uv sync                                  # crea .venv con deps exactas del lock
 #   uv lock                                  # regenera uv.lock
 #   uv run streamlit run src/berrix/app_public.py
-#   uv run python src/berrix/build_public.py
+#   uv run python tools/validacion_anonimizacion.py
 #
 # Regenerar requirements.txt (compatibilidad con pip):
 #   uv export --format requirements-txt --no-hashes > requirements.txt
@@ -55,7 +55,7 @@ classifiers = [
 
 dependencies = [
     "streamlit>=1.61.1",
-    "polars>=1.43.2",
+    "polars>=2.0.0,<3.0",
     "pandas>=3.0.6",
     "plotly>=6.9.0",
     "duckdb>=1.5.5",

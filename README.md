@@ -16,6 +16,8 @@ A real commercial analytics case — anonymized and reproducible.
 
 A dashboard that turns B2B sales transactions into four decision questions for an agribusiness commercial committee: how sales are trending by channel, where revenue comes from by region, which customers are steadily reducing purchases, and which accounts buy only one species. Built on real anonymized data (33 B2B customers, k ≥ 5), with a public demo and a documented anonymization methodology.
 
+> **Disclaimer:** The exact customer count is published for scale purposes; it does not identify individual customers or reveal the portfolio structure.
+
 ## The problem
 
 Commercial teams at agribusiness companies often navigate disconnected spreadsheets, manual analyses, and decisions based on averages that hide the real picture. When information is fragmented, the commercial committee misses trends, fails to spot risks in time, and cannot prioritize actions with data.
@@ -59,7 +61,7 @@ The dashboard structures commercial information across four interconnected views
 
 ## Design decisions
 
-### 1 · Price-neutral metrics in kilograms for alerts (D03)
+### 1 · Price-neutral metrics in kilograms for alerts
 
 A price change should never make a customer look like they are buying less when they are buying the same volume. That is why retention alerts are computed in kilograms, not in currency. Using monetary value, a price drop could trigger a false churn alert.
 
@@ -139,6 +141,9 @@ berries-dashboard/
 │       ├── d03_alertas_total_publico.parquet
 │       ├── d04_portafolio_publico.parquet
 │       └── d04_portafolio_global_publico.parquet
+├── tools/
+│   ├── validacion_anonimizacion.py
+│   └── README.md
 ├── docs/
 │   └── public/
 │       ├── cerebro-berries-public.md
@@ -148,6 +153,7 @@ berries-dashboard/
 │           └── guia-tablero-public.html
 ├── .streamlit/
 │   └── config.toml             # AG brand identity
+├── uv.lock
 ├── pyproject.toml
 ├── requirements.txt
 ├── LICENSE
@@ -157,6 +163,21 @@ berries-dashboard/
 
 ## Local execution
 
+### Option A · uv (recommended)
+
+```
+# Clone the repo
+git clone https://github.com/ag-agrodata/berries-dashboard.git
+cd berries-dashboard
+
+# Sync and install dependencies
+uv sync
+
+# Run the dashboard
+streamlit run src/berrix/app_public.py
+```
+
+### Option B · pip
 ```
 # Clone the repo
 git clone https://github.com/ag-agrodata/berries-dashboard.git

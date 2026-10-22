@@ -1,0 +1,109 @@
+================================================================================
+REPORTE DE VALIDACIÓN DE ANONIMIZACIÓN
+berries-dashboard · data/public/
+================================================================================
+
+Fecha de ejecución:   2026-10-22T03:10:39+00:00
+Python:               3.13.15
+Polars:               2.0.0
+Directorio:           /Users/pipe/Documents/Mis proyectos/Proyectos DA/Portafolio/berries-dashboard/data/public
+Archivos .parquet:    8
+Total de clientes:    33
+Parámetros:           K_MIN=5, CELL_MIN=10
+
+================================================================================
+HASHES SHA-256 (truncados)
+================================================================================
+  d01_canal_publico.parquet                      026f51376ece974a
+  d01_temporada_publico.parquet                  22e6171c8f9cf86a
+  d02_concentracion_publico.parquet              5eea78473ea74825
+  d02_macro_region_publico.parquet               97080df331415189
+  d03_alertas_publico.parquet                    e3993ae7a85931d3
+  d03_alertas_total_publico.parquet              8625238a72ff3221
+  d04_portafolio_global_publico.parquet          5ae94bc384339409
+  d04_portafolio_publico.parquet                 7cbbf9207b9c49ce
+
+================================================================================
+d01_canal_publico.parquet  (2 filas, 5 columnas)
+================================================================================
+  [1] Singularización:          PASS — OK — 2 celdas, min(n_clientes)=12
+  [2] Membresía:                PASS — OK — ninguna celda con n_clientes == 1
+  [3] Divulgación de atributo:  PASS — no aplicable — n_clientes no particiona el universo (suma=25, total=33, diff=24% > 20%)
+  [4] Identificadores:          PASS — OK — 5 columnas sin patrones de PII
+  [5] Celdas ≥ 10:           PASS — OK — todas las celdas ≥ 10
+  [6] Reconstrucción de precio: PASS — PASS — ratio venta_neta_cop/kg_total no evaluable (n=2 < 5)
+
+================================================================================
+d01_temporada_publico.parquet  (3 filas, 5 columnas)
+================================================================================
+  [1] Singularización:          PASS — OK — 3 celdas, min(n_clientes)=24
+  [2] Membresía:                PASS — OK — ninguna celda con n_clientes == 1
+  [3] Divulgación de atributo:  PASS — no aplicable — n_clientes no particiona el universo (suma=81, total=33, diff=145% > 20%)
+  [4] Identificadores:          PASS — OK — 5 columnas sin patrones de PII
+  [5] Celdas ≥ 10:           PASS — OK — todas las celdas ≥ 10
+  [6] Reconstrucción de precio: PASS — PASS — ratio venta_neta_cop/kg_total no evaluable (n=3 < 5)
+
+================================================================================
+d02_concentracion_publico.parquet  (3 filas, 2 columnas)
+================================================================================
+  [1] Singularización:          PASS — sin columna n_clientes (aplica por diseño)
+  [2] Membresía:                PASS — sin columna n_clientes — riesgo bajo por agregación
+  [3] Divulgación de atributo:  PASS — sin n_clientes o sin total de referencia — no verificable
+  [4] Identificadores:          PASS — OK — 2 columnas sin patrones de PII
+  [5] Celdas ≥ 10:           PASS — sin n_clientes — aplica por diseño (agregado global o índice)
+  [6] Reconstrucción de precio: PASS — OK — sin columnas de precio
+
+================================================================================
+d02_macro_region_publico.parquet  (2 filas, 5 columnas)
+================================================================================
+  [1] Singularización:          PASS — OK — 2 celdas, min(n_clientes)=16
+  [2] Membresía:                PASS — OK — ninguna celda con n_clientes == 1
+  [3] Divulgación de atributo:  PASS — OK — partición detectada (suma=33, total=33); ninguna celda complementaria de tamaño < 10
+  [4] Identificadores:          PASS — OK — 5 columnas sin patrones de PII
+  [5] Celdas ≥ 10:           PASS — OK — todas las celdas ≥ 10
+  [6] Reconstrucción de precio: PASS — PASS — ratio venta_neta_cop/kg_total no evaluable (n=2 < 5)
+
+================================================================================
+d03_alertas_publico.parquet  (27 filas, 4 columnas)
+================================================================================
+  [1] Singularización:          PASS — OK — 27 celdas, min(n_clientes)=10
+  [2] Membresía:                PASS — OK — ninguna celda con n_clientes == 1
+  [3] Divulgación de atributo:  PASS — no aplicable — n_clientes no particiona el universo (suma=367, total=33, diff=1012% > 20%)
+  [4] Identificadores:          PASS — OK — 4 columnas sin patrones de PII
+  [5] Celdas ≥ 10:           PASS — OK — todas las celdas ≥ 10
+  [6] Reconstrucción de precio: PASS — OK — sin columnas de precio
+
+================================================================================
+d03_alertas_total_publico.parquet  (3 filas, 3 columnas)
+================================================================================
+  [1] Singularización:          PASS — OK — 3 celdas, min(n_clientes)=13
+  [2] Membresía:                PASS — OK — ninguna celda con n_clientes == 1
+  [3] Divulgación de atributo:  PASS — no aplicable — n_clientes no particiona el universo (suma=69, total=33, diff=109% > 20%)
+  [4] Identificadores:          PASS — OK — 3 columnas sin patrones de PII
+  [5] Celdas ≥ 10:           PASS — OK — todas las celdas ≥ 10
+  [6] Reconstrucción de precio: PASS — OK — sin columnas de precio
+
+================================================================================
+d04_portafolio_global_publico.parquet  (1 filas, 8 columnas)
+================================================================================
+  [1] Singularización:          PASS — sin columna n_clientes (aplica por diseño)
+  [2] Membresía:                PASS — sin columna n_clientes — riesgo bajo por agregación
+  [3] Divulgación de atributo:  PASS — sin n_clientes o sin total de referencia — no verificable
+  [4] Identificadores:          PASS — OK — 8 columnas sin patrones de PII
+  [5] Celdas ≥ 10:           PASS — sin n_clientes — aplica por diseño (agregado global o índice)
+  [6] Reconstrucción de precio: PASS — PASS — precio sin volumen (['clientes_alto_valor', 'venta_total_cop', 'venta_cautivos_cop']); ratio no reconstruible
+
+================================================================================
+d04_portafolio_publico.parquet  (2 filas, 4 columnas)
+================================================================================
+  [1] Singularización:          PASS — OK — 2 celdas, min(n_clientes)=15
+  [2] Membresía:                PASS — OK — ninguna celda con n_clientes == 1
+  [3] Divulgación de atributo:  PASS — OK — partición detectada (suma=33, total=33); ninguna celda complementaria de tamaño < 10
+  [4] Identificadores:          PASS — OK — 4 columnas sin patrones de PII
+  [5] Celdas ≥ 10:           PASS — OK — todas las celdas ≥ 10
+  [6] Reconstrucción de precio: PASS — PASS — ratio venta_neta_total_cop/kg_total no evaluable (n=2 < 5)
+
+================================================================================
+VEREDICTO GLOBAL
+================================================================================
+PASS — todos los ataques superados. Reporte válido como verificación.

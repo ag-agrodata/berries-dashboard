@@ -14,7 +14,7 @@ This document is the register of decisions, assumptions, glossary, and limitatio
 
 **What it is not:** it is not a transactional system, does not replace the ERP, does not produce forecasts, does not recommend prices. It is a reading layer over already-consolidated data.
 
-**Public dataset scope:** 33 B2B customers, 3 commercial channels (after suppression), 2 macro-regions, multiple seasons. The data are k-anonymous derivatives of the real case, published under the NDA with the client (see [`LICENSE-DATA`](LICENSE-DATA)).
+**Public dataset scope:** 33 B2B customers, 3 commercial channels (after suppression), 2 macro-regions, multiple seasons. The exact customer count is published for scale purposes; it does not identify individual customers or reveal the portfolio structure. The data are k-anonymous derivatives of the real case, published under the NDA with the client (see [`LICENSE-DATA`](LICENSE-DATA)).
 
 **Project phases:** the case went through four phases before arriving here (working with the company → Excel + Tableau delivery → Streamlit replication → anonymization and publication). The full story is in the "The four phases of the project" section of the READMEs. That chain is part of the value of the case and must not be lost in the internal documentation.
 
