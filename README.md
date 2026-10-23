@@ -114,7 +114,7 @@ The full methodology is documented in [`build_public.py`](src/berrix/build_publi
 
 > ⚠️ **Transparency note:** due to the size of the B2B base (33 customers), some categories with few contributors are generalized or suppressed to guarantee k ≥ 5 and cells ≥ 10. The detailed per-customer analysis exists only at the local pseudonymized level, under the confidentiality agreement.
 
-## Companion project
+## Companion project: End-to-End Agribusiness Analytics
 
 This case is complemented by [cosecha-public](https://github.com/ag-agrodata/cosecha-public), a prescriptive harvest planner for blueberries: the other end of the agribusiness value chain. While this dashboard looks at the commercial committee, `cosecha-public` looks at harvest operations, headcount and cost.
 
@@ -171,6 +171,7 @@ berries-dashboard/
 ├── LICENSE-DATA
 └── README.md
 ```
+> 👨🏻‍💻 **Technical note:** `berrix` is the internal package name (a contraction of berries + *analytics) that houses the analytical engine and forecasting modules for this project suite. It is kept as a namespace to maintain architectural coherence with the companion repository (cosecha-public).
 
 ## Local execution
 
@@ -221,7 +222,11 @@ This project uses a layered license:
 
 ---
 
-**Andrés Gómez**
-Agribusiness Data Analyst
-"I turn the complexity of the field into data-driven decisions."
-afgomez.agroindustrial@gmail.com
+<div align="center">
+
+**Andrés Gómez**<br/>
+Agribusiness Data Analyst<br/>
+
+[🌐 Portfolio](https://github.com/ag-agrodata) · [📧 Contact](mailto:afgomez.agroindustrial@gmail.com)
+
+</div>

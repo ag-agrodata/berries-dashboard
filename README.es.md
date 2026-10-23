@@ -114,7 +114,7 @@ La metodología completa está documentada en [`build_public.py`](src/berrix/bui
 
 > ⚠️ **Nota de transparencia:** debido al tamaño de la base B2B (33 clientes), algunas categorías con pocos contribuyentes se generalizan o suprimen para garantizar k ≥ 5 y celdas ≥ 10. El análisis detallado por cliente individual existe únicamente en el nivel local pseudonimizado, conforme al acuerdo de confidencialidad.
 
-## Proyecto acompañante
+## Proyecto Acompañante: Analítica Agroindustrial Integral
 
 Este caso se complementa con [cosecha-public](https://github.com/ag-agrodata/cosecha-public), un planificador operativo de cosecha de arándanos: el otro extremo de la cadena de valor agroindustrial. Mientras este tablero mira hacia el comité comercial, `cosecha-public` mira hacia la operación de cosecha, la dotación y el costo.
 
@@ -171,6 +171,7 @@ berries-dashboard/
 ├── LICENSE-DATA
 └── README.md
 ```
+> 👨🏻‍💻 **Nota técnica:** berrix es el nombre del paquete interno (contracción de berries + analytics) que alberga el motor analítico y los módulos de pronóstico de esta suite de proyectos. Se mantiene como namespace para preservar la coherencia arquitectónica con el repositorio acompañante (cosecha-public).
 
 ## Ejecución local
 
@@ -221,7 +222,11 @@ Este proyecto usa una **licencia por capas**:
 
 ---
 
-**Andrés Gómez**
-Analista de Datos Agroindustriales
-"Transformo la complejidad del campo en decisiones basadas en datos."
-afgomez.agroindustrial@gmail.com
+<div align="center">
+
+**Andrés Gómez**<br/>
+Analista de Datos Agroindustriales<br/>
+
+[🌐 Portafolio](https://github.com/ag-agrodata) · [📧 Contacto](mailto:afgomez.agroindustrial@gmail.com)
+
+</div>
