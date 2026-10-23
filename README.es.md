@@ -203,6 +203,8 @@ pip install -r requirements.txt
 streamlit run src/berrix/app_public.py
 ```
 
+Abre `http://localhost:8501`. El toggle **ES | EN** está arriba a la derecha del tablero.
+
 ## Ver la App
 
 [🌐 Streamlit Cloud](https://berries-dashboard-ztwjxjslwpatnh5kvgn9wd.streamlit.app/)
