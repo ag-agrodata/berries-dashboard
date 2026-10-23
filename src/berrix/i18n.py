@@ -60,7 +60,7 @@ TEXT = {
 		"d01_m1": "Venta neta B2B total",
 		"d01_m2": "Canal líder",
 		"d01_m3": "Canales visibles",
-		"d01_m3_value": "{n} de 5",
+		"d01_m3_value": "{n} de 3",
 		"d01_mix_title": "Mezcla de canales (agregado histórico)",
 		"d01_axis_canal": "Canal",
 		"d01_axis_venta": "Venta neta (COP)",
