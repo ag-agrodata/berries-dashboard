@@ -1,14 +1,23 @@
 [🇬🇧 English](README.md) · [🇪🇸 Español](README.es.md)
 
-<img src="src/berrix/assets/ag6.svg" alt="AG · Andrés Gómez" width="180"/>
+<div align="center">
 
-# Tablero Comercial · Berrix
+<img src="src/berrix/assets/ag6.svg" alt="AG · Andrés Gómez/Agrodata" width="180"/>
+
+# 🎛️ Tablero Comercial · Berrix
+### Versión Pública
 
 **Analítica de ventas B2B para el sector agroindustrial de berries**
 
 Un caso real de análisis comercial, anonimizado y reproducible.
 
 [![Python](https://img.shields.io/badge/Python-3.13-1B4332?style=flat-square&logo=python&logoColor=white)](https://www.python.org/) [![Streamlit](https://img.shields.io/badge/Streamlit-1.61-1B4332?style=flat-square&logo=streamlit&logoColor=white)](https://streamlit.io/) [![Polars](https://img.shields.io/badge/Polars-1.43-2C5F7C?style=flat-square)](https://pola.rs/) [![DuckDB](https://img.shields.io/badge/DuckDB-SQL-2C5F7C?style=flat-square&logo=duckdb&logoColor=white)](https://duckdb.org/) [![Plotly](https://img.shields.io/badge/Plotly-6.9-BC6C25?style=flat-square&logo=plotly&logoColor=white)](https://plotly.com/)
+
+[🚀 Demo en vivo](https://berries-dashboard-ztwjxjslwpatnh5kvgn9wd.streamlit.app/) · [📖 Documentación](docs/public/) · [📊 Cerebro analítico](docs/public/cerebro-berries-public.md)
+
+*Elaborado por **Andrés Gómez** · Analista de Datos Agroindustriales*
+
+</div>
 
 ---
 
