@@ -126,13 +126,13 @@ Este caso se complementa con [cosecha-public](https://github.com/ag-agrodata/cos
 berries-dashboard/
 ├── src/
 │   └── berrix/
-│       ├── app_public.py       # Public Streamlit dashboard
-│       ├── build_public.py     # Anonymization methodology
-│       ├── i18n.py             # ES/EN copy and display maps
+│       ├── app_public.py                           # Public Streamlit dashboard
+│       ├── build_public.py                         # Anonymization methodology
+│       ├── i18n.py                                 # ES/EN copy and display maps
 │       └── assets/
-│           └── ag6.svg         # AG v6 logo
+│           └── ag6.svg                             # AG v6 logo
 ├── data/
-│   └── public/                 # k-anonymous data only (8 parquet tables)
+│   └── public/                                     # k-anonymous data only (8 parquet tables)
 │       ├── d01_canal_publico.parquet
 │       ├── d01_temporada_publico.parquet
 │       ├── d02_concentracion_publico.parquet
@@ -145,6 +145,8 @@ berries-dashboard/
 │   ├── validacion_anonimizacion.py
 │   └── README.md
 ├── docs/
+│   ├── legal
+│   │   └── riesgos-aceptados.md
 │   └── public/
 │       ├── cerebro-berries-public.md
 │       ├── guia-tablero-public.html
@@ -152,7 +154,7 @@ berries-dashboard/
 │           ├── cerebro-berries-public.md
 │           └── guia-tablero-public.html
 ├── .streamlit/
-│   └── config.toml             # AG brand identity
+│   └── config.toml                                  # AG brand identity
 ├── uv.lock
 ├── pyproject.toml
 ├── requirements.txt
