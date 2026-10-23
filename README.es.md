@@ -226,6 +226,7 @@ Este proyecto usa una **licencia por capas**:
 
 **Andrés Gómez**<br/>
 Analista de Datos Agroindustriales<br/>
+"Transformo la complejidad del campo en decisiones basadas en datos."
 
 [🌐 Portafolio](https://github.com/ag-agrodata) · [📧 Contacto](mailto:afgomez.agroindustrial@gmail.com)
 
