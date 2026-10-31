@@ -219,7 +219,6 @@ Trabajo pendiente, en orden de prioridad:
 
 **Andrés Gómez**  
 Agribusiness Data Analyst  
-afgomez.agroindustrial@gmail.com  
-[github.com/ag-agrodata](https://github.com/ag-agrodata)
+[Portafolio](https://ag-agrodata.netlify.app/)
 
 Para consultas sobre decisiones, supuestos o limitaciones de este documento, o para reportar un posible incumplimiento del acuerdo de confidencialidad, escribir al correo arriba.

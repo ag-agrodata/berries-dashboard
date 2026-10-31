@@ -228,6 +228,6 @@ This project uses a layered license:
 Agribusiness Data Analyst<br/>
 "I turn the complexity of the field into data-driven decisions."
 
-[🌐 Portfolio](https://github.com/ag-agrodata) · [📧 Contact](mailto:afgomez.agroindustrial@gmail.com)
+[🌐 Portfolio](https://ag-agrodata.netlify.app/)
 
 </div>
