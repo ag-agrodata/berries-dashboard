@@ -218,7 +218,7 @@ Trabajo pendiente, en orden de prioridad:
 ## 9. Contacto
 
 **Andrés Gómez**  
-Agribusiness Data Analyst  
+Analista de datos agroindustriales  
 [Portafolio](https://ag-agrodata.netlify.app/)
 
 Para consultas sobre decisiones, supuestos o limitaciones de este documento, o para reportar un posible incumplimiento del acuerdo de confidencialidad, escribir al correo arriba.
